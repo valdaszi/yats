@@ -1,0 +1,25 @@
+<div class="exams-container">
+  <mat-card class="exam-card" [class.finished]="exam.finished" *ngFor="let exam of exams | async">
+    <mat-card-header>
+      <mat-card-title>
+        {{ exam.test.name }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ exam.test.description }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="content">
+        <div *ngIf="exam.validUntil"><span translate>Valid until</span>: {{ exam.validUntil | firebaseDate:'yyyy-MM-dd' }}</div>
+        <div *ngIf="exam.test.duration"><span translate>Duration</span>: {{ exam.test.duration }} min.</div>
+        <div><span translate>Points</span>: {{ exam.test.points }}</div>
+        <div><span translate>Questions</span>: {{ exam.test.questions }}</div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div *ngIf="!exam.finished">
+        <button mat-raised-button (click)="go(exam)"><span translate>Take the test</span></button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

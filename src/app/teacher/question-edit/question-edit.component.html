@@ -1,0 +1,87 @@
+<!-- <app-test-label [testId]="testId"></app-test-label> -->
+
+<div *ngIf="model">
+  <form #testQuestionForm="ngForm" class="form-container">
+
+    <div class="markdown-container">
+      <div class="markdown-edit">
+        <mat-form-field>
+          <mat-label translate>Question</mat-label>
+          <textarea class="question" matInput
+                    [(ngModel)]="model.question"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="1"
+                    name="question"
+                    required></textarea>
+        </mat-form-field>
+        <div>
+          <mat-form-field>
+            <mat-label translate>Line number</mat-label>
+            <input type="number" matInput [(ngModel)]="model.lineNumber" name="line">
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-card class="markdown-view">
+        <mat-card-subtitle translate>Question preview</mat-card-subtitle>
+        <markdown lineNumbers [start]="model.lineNumber" [data]="model.question" *ngIf="model.lineNumber"></markdown>
+        <markdown [data]="model.question" *ngIf="!model.lineNumber"></markdown>
+      </mat-card>
+    </div>
+
+    <h3 translate>Answers</h3>
+
+    <div class="field">
+      <mat-form-field class="type">
+        <mat-label translate>Answer Type</mat-label>
+        <mat-select class="type" matInput
+                    [(ngModel)]="model.type"
+                    name="type"
+                    required>
+          <mat-option *ngFor="let type of questionTypes" [value]="type.value">
+            {{ type.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="answer && model.type" class="answers">
+      <mat-card *ngFor="let ans of answer.answers; index as i" class="answer">
+        <mat-form-field class="answer-answer">
+          <mat-label translate>Answer</mat-label>
+          <input type="text" matInput [(ngModel)]="ans.answer" (change)="answerOnChange()" name="answer{{i}}" required>
+        </mat-form-field>
+
+        <mat-checkbox color="primary" [(ngModel)]="ans.correct" class="answer-correct" (change)="answerOnChange()" name="correct{{i}}">
+          <span translate>Correct answer</span>
+        </mat-checkbox>
+
+        <button mat-icon-button aria-label="Delete" color="warn" (click)="delete(i, $event)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card>
+
+      <button mat-icon-button aria-label="Add" color="primary" (click)="add($event)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div>
+      <div class="field">
+        <mat-checkbox name="randomize" [(ngModel)]="model.randomize" color="primary"><span translate>Randomize answers order</span></mat-checkbox>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label translate>Points</mat-label>
+          <input type="number" matInput [(ngModel)]="model.points" name="points" required>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="button-row">
+      <button mat-raised-button color="primary" [disabled]="!testQuestionForm.form.valid" (click)="save()"><span translate>Save</span></button>
+      <button mat-raised-button color="warn" (click)="cancel()" translate><span translate>Cancel</span></button>
+    </div>
+  </form>
+</div>
+

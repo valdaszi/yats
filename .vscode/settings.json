@@ -1,0 +1,26 @@
+{
+  "htmlhint.options": {
+    "attr-lowercase": [
+      "*ngIf",
+      "ngIf",
+      "*ngFor",
+      "ngFor",
+      "ngSwitch",
+      "ngModel",
+      "[(ngModel)]",
+      "routerLink",
+
+      "[formGroup]",
+      "(ngSubmit)",
+      "matInput",
+      "formControlName",
+      "[fixedInViewport]",
+      "[style.marginTop.px]",
+      "fixedTopGap"
+    ],
+    "doctype-first": false
+  },
+  "files.exclude": {
+    "**/node_modules": true
+  },
+}

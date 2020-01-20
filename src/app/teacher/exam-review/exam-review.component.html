@@ -1,0 +1,86 @@
+<div *ngIf="working" >
+  <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+</div>
+
+<div class="exam-finished" *ngIf="!working">
+  <div class="student-name">{{ student.name }} </div>
+  <div>
+    <span class="text" translate>Questions</span>:
+    <span class="exam-student-points">{{ student.questions }}</span>
+    /
+    <span class="exam-total-points">{{ student.questionsIds.length }}</span>
+  </div>
+  <div>
+    <span class="text" translate>Total points</span>:
+    <span class="exam-student-points">{{ studentPoints | number }}</span>
+    /
+    <span class="exam-total-points">{{ totalPoints | number }}</span>
+  </div>
+  <div class="exam-percent">{{ percent }}%</div>
+</div>
+
+<div *ngIf="current && !working">
+
+  <div class="numbers-container">
+    <button mat-raised-button color="primary" (click)="prevQuestion()"><span translate>Previous</span></button>
+    <div class="numbers">
+      <div><span class="current-question">{{ questionNumber+1 }}</span> / <span class="total-question">{{ student.questionsIds.length }}</span></div>
+      <div><span class="answered-points" translate>Points</span>: <span class="student-points">{{ current.result?.studentPoints }}</span> / <span class="question-points">{{ current.result?.questionPoints }}</span></div>
+    </div>
+    <button mat-raised-button color="primary" (click)="nextQuestion()"><span translate>Next</span></button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div>
+    <markdown lineNumbers [start]="current.question.lineNumber" [data]="current.question.question" *ngIf="current.question.lineNumber"></markdown>
+    <markdown [data]="current.question.question" *ngIf="!current.question.lineNumber"></markdown>
+
+    <mat-divider></mat-divider>
+
+    <div class="answers">
+
+      <div class="answer-label" translate>Answer</div>
+
+      <div class="answers-container">
+        <div *ngFor="let ans of current.answers" class="answer-line" [ngClass]="{'correct': ans.correct, 'missed': ans.missed, 'wrong': ans.wrong}">
+
+          <div class="question-type" *ngIf="current.question.type === CheckType">
+            <mat-icon *ngIf="ans.correct || ans.missed">check_box</mat-icon>
+            <mat-icon *ngIf="!(ans.correct || ans.missed)">check_box_outline_blank</mat-icon>
+          </div>
+
+          <div class="answer-result" *ngIf="current.question.type === CheckType">
+            <mat-icon *ngIf="ans.correct">check_box</mat-icon>
+            <mat-icon *ngIf="ans.missed">check_box_outline_blank</mat-icon>
+            <mat-icon *ngIf="ans.wrong">check_box</mat-icon>
+            <mat-icon *ngIf="!ans.correct && !ans.missed && !ans.wrong">check_box_outline_blank</mat-icon>
+          </div>
+
+          <div class="question-type" *ngIf="current.question.type === RadioType">
+            <mat-icon *ngIf="ans.correct || ans.missed">radio_button_checked</mat-icon>
+            <mat-icon *ngIf="!(ans.correct || ans.missed)">radio_button_unchecked</mat-icon>
+          </div>
+
+          <div class="answer-result" *ngIf="current.question.type === RadioType">
+            <mat-icon *ngIf="ans.correct">radio_button_checked</mat-icon>
+            <mat-icon *ngIf="ans.missed">radio_button_unchecked</mat-icon>
+            <mat-icon *ngIf="ans.wrong">radio_button_checked</mat-icon>
+            <mat-icon *ngIf="!ans.correct && !ans.missed && !ans.wrong">radio_button_unchecked</mat-icon>
+          </div>
+
+          <div class="question-type" *ngIf="current.question.type === TextType">
+            <mat-icon *ngIf="ans.correct || ans.missed">check</mat-icon>
+            <mat-icon *ngIf="!(ans.correct || ans.missed)" class="wrong">close</mat-icon>
+          </div>
+
+          <div class="answer-text" [ngClass]="{'primary': current.question.type === TextType && ans.missed}">{{ ans.answer }}</div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

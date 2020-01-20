@@ -1,0 +1,52 @@
+<div *ngIf="model">
+  <form #groupForm="ngForm" class="form-container">
+
+    <mat-form-field>
+      <mat-label translate>Name</mat-label>
+      <input matInput [(ngModel)]="model.name" name="name" required>
+    </mat-form-field>
+
+    <div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="startPicker" placeholder="{{ 'Choose a start date' | translate }}" [(ngModel)]="model.start" name="start" required>
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker> <!-- [startAt]="startDate" -->
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="endPicker" placeholder="{{ 'Choose an end date' | translate }}" [(ngModel)]="model.end" name="end" required>
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker> <!-- [startAt]="endDate" -->
+      </mat-form-field>
+    </div>
+
+    <app-labels-edit [model]="model" class="labels"></app-labels-edit>
+
+    <h3 translate>Students</h3>
+
+    <div *ngFor="let student of model.students; let i = index" class="student">
+      <mat-form-field class="student-name">
+        <mat-label translate>Student Name</mat-label>
+        <input matInput [(ngModel)]="student.name" name="name{{i}}" required>
+      </mat-form-field>
+      <mat-form-field class="student-email">
+        <mat-label translate>Email</mat-label>
+        <input type="email" matInput [(ngModel)]="student.email" name="email{{i}}" required>
+      </mat-form-field>
+
+      <button mat-icon-button aria-label="Delete" color="warn" (click)="deleteStudent(i, $event)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <button mat-icon-button aria-label="Add" color="primary" (click)="addStudent($event)">
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <div class="button-row">
+      <button mat-raised-button color="primary" [disabled]="!groupForm.form.valid" type="button" (click)="save()"><span translate>Save</span></button>
+      <button mat-raised-button color="warn" type="button" (click)="cancel()" translate><span translate>Cancel</span></button>
+    </div>
+  </form>
+</div>

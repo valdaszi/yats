@@ -1,0 +1,41 @@
+<mat-toolbar color="primary" class="toolbar">
+  <mat-toolbar-row class="row">
+    <a routerLink="" class="app-name"><span translate>APP_NAME</span></a>
+
+    <a [routerLink]="menuItem.route" class="component-menu" *ngFor="let menuItem of componentMenu.topMenu">
+      <span translate>{{ menuItem.label }}</span>
+    </a>
+
+    <span class="fill-remaining-space"></span>
+
+    <button *ngIf="showLogout()" mat-button [matMenuTriggerFor]="menu">
+        <span>{{ displayName }}</span>
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="profile()">
+        <mat-icon>person</mat-icon>
+        <span translate>Profile</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>lock</mat-icon>
+        <span translate>Logout</span>
+      </button>
+    </mat-menu>
+
+    <button *ngIf="showLogin()" (click)="login()" mat-button>
+      <mat-icon>lock_open</mat-icon>
+      <span translate>Login</span>
+    </button>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="breadcrumb">
+  <app-breadcrumb></app-breadcrumb>
+</div>
+<mat-divider></mat-divider>
+
+<div class="content">
+  <ng-content></ng-content>
+</div>

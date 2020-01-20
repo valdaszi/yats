@@ -1,0 +1,27 @@
+<div class="container">
+
+  <div class="table">
+    <div class="row" *ngFor="let result of examResults | async" (click)="review(result)">
+      <div class="cell name">
+        <div>{{ result.name }}</div>
+        <div class="email-inline">{{ result.email }}</div>
+      </div>
+      <div class="cell email">{{ result.email }}</div>
+      <div class="cell right">{{ result.questions }}</div>
+      <div class="cell bar"><mat-progress-bar [value]="result.questions / result.questionsIds.length * 100"></mat-progress-bar></div>
+      <div class="cell right">{{ result.questionsIds.length }}</div>
+      <div class="cell">
+        <mat-icon *ngIf="!result.finished && !result.startedAt" class="not-started">warning</mat-icon>
+        <mat-icon *ngIf="!result.finished && result.startedAt" class="started">edit</mat-icon>
+        <mat-icon *ngIf="result.finished" class="finished">done</mat-icon>
+      </div>
+      <div class="cell right">
+        <span *ngIf="result.questionPoints">{{ result.points | number }}/{{ result.questionPoints }}</span>
+      </div>
+      <div class="cell right percent">
+        {{ percent(result.points || 0, result.questionPoints) }}
+      </div>
+    </div>
+  </div>
+
+</div>

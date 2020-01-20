@@ -1,0 +1,39 @@
+<div *ngIf="model">
+  <markdown lineNumbers [start]="model.lineNumber" [data]="model.question" *ngIf="model.lineNumber"></markdown>
+  <markdown [data]="model.question" *ngIf="!model.lineNumber"></markdown>
+
+  <mat-divider></mat-divider>
+
+  <div class="answers">
+
+    <div *ngIf="model.type === TextType">
+      <mat-form-field>
+        <mat-label translate>Answer</mat-label>
+        <input type="text" matInput [(ngModel)]="answer">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="model.type === RadioType">
+      <label class="label" translate>Answer</label>
+      <mat-radio-group class="radio-group" [(ngModel)]="answer">
+        <mat-radio-button class="radio-button" *ngFor="let answer of model.answers; let i = index" [value]="i"> {{ answer }} </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div *ngIf="model.type === CheckType">
+      <label class="label" translate>Answers</label>
+      <div *ngFor="let answer of model.answers" class="checkbox-group">
+        <mat-checkbox class="checkbox-button"> {{ answer }} </mat-checkbox>
+      </div>
+    </div>
+
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="buttons">
+    <button mat-raised-button color="primary" (click)="ok()"><span translate>OK</span></button>
+  </div>
+
+</div>
+

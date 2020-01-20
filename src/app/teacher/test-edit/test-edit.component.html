@@ -1,0 +1,24 @@
+<div *ngIf="model">
+  <form #testForm="ngForm" class="form-container">
+
+    <mat-form-field>
+      <mat-label translate>Name</mat-label>
+      <input matInput [(ngModel)]="model.name" name="name" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label translate>Description</mat-label>
+      <textarea matInput [(ngModel)]="model.description"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                name="description"></textarea>
+    </mat-form-field>
+
+    <app-labels-edit [model]="model"></app-labels-edit>
+
+    <div class="button-row">
+      <button mat-raised-button color="primary" [disabled]="!testForm.form.valid" (click)="save()"><span translate>Save</span></button>
+      <button mat-raised-button color="warn" type="button" (click)="cancel()"><span translate>Cancel</span></button>
+    </div>
+  </form>
+</div>

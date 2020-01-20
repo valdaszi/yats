@@ -1,0 +1,36 @@
+:host {
+  text-align: center;
+  display: block;
+  margin-top: 10%;
+}
+
+/* form {
+  max-width: 300px;
+  margin: auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.actions {
+  text-align: center;
+} */
+
+button {
+  margin: 10px;
+
+  &.github {
+    background-color: #24292e;
+    color: white;
+  }
+
+  &.google {
+    background-color: #cb4023;
+    color: white;
+  }
+
+  mat-icon {
+    padding-right: 0.5em;
+  }
+}

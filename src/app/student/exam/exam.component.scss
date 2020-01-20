@@ -1,0 +1,21 @@
+.exam-container {
+  padding: 0 16px;
+}
+
+mat-divider {
+  margin: 16px 0;
+}
+
+.finished-container {
+  display: flex;
+  flex-flow: column;
+
+  .finished {
+    background-color: green;
+    color: white;
+    padding: 12px;
+    margin: 12px 0;
+    text-align: center;
+  }
+}
+

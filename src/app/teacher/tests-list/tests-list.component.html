@@ -1,0 +1,34 @@
+
+<div class="teacher-container">
+  <mat-card class="teacher-card" *ngFor="let test of tests">
+    <mat-card-header>
+      <mat-card-title>
+        {{ test.name }}
+      </mat-card-title>
+      <mat-card-subtitle>
+          <mat-chip-list>
+              <mat-chip *ngFor="let label of test.labels">{{ label }}</mat-chip>
+          </mat-chip-list>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>{{ test.description }}</p>
+        <p><span translate>Questions</span>: <strong>{{test.questions}}</strong></p>
+        <p><span translate>Points</span>: <strong>{{test.points}}</strong></p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="showQuestions(test)"><span translate>Questions</span></button>
+      <!-- <button mat-raised-button (click)="assign(test)"><span translate>Assign</span></button> -->
+      <span class="fill-remaining-space"></span>
+      <button mat-icon-button aria-label="Edit" (click)="edit(test)">
+          <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div class="global-add-button">
+  <button mat-mini-fab aria-label="Add" (click)="add()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

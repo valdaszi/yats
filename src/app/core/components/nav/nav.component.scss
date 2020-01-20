@@ -1,0 +1,47 @@
+
+.content {
+  margin: 12px;
+}
+
+a.app-name {
+  color: white;
+  text-decoration: none;
+  margin: 0 16px;
+}
+
+a.component-menu {
+  color: white;
+  text-decoration: none;
+  margin: 0 16px;
+  font-size: 14px;
+}
+
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+mat-toolbar.toolbar {
+  height: 48px;
+  min-height: 48px;
+}
+
+mat-toolbar-row {
+  &.row {
+    height: 48px;
+    padding: 0;
+  }
+  // &.breadcrumb {
+  //   height: 32px;
+  // }
+}
+
+.breadcrumb {
+  font-size: 12px;
+  padding: 8px 16px;
+}
+
+
+

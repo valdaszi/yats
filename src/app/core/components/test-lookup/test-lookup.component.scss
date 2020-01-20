@@ -1,0 +1,22 @@
+table {
+  width: 100%;
+}
+
+.mat-header-cell {
+  padding-right: 8px;
+  padding-left:  8px;
+}
+
+.mat-cell {
+  padding: 4px 8px;
+}
+
+tr.mat-row:hover {
+  background: rgb(230, 230, 230);
+  cursor: pointer;
+}
+
+.position {
+  color: rgba(0, 0, 0, .54);
+  font-size: 12px;
+}

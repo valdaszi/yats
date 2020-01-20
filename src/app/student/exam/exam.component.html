@@ -1,0 +1,30 @@
+
+<div *ngIf="working" >
+  <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+</div>
+
+<div *ngIf="working === false" class="exam-container">
+  <h2>{{ exam.test.name }}</h2>
+
+  <h3>{{ exam.test.description }}</h3>
+
+  <p><span translate>Questions</span>: <strong>{{ exam.test.questions }}</strong></p>
+  <p><span translate>Points</span>: <strong>{{ exam.test.points }}</strong></p>
+  <p *ngIf="exam.test.duration"><span translate>Duration</span>: <strong>{{ exam.test.duration }}</strong></p>
+
+  <p *ngIf="student.startedAt"><span translate>Started at</span>: <strong>{{ student.startedAt | firebaseDate:'HH:mm' }}</strong></p>
+  <p *ngIf="student.validUntil"><span translate>Valid until</span>: <strong>{{ student.validUntil | firebaseDate:'HH:mm' }}</strong></p>
+
+  <mat-divider></mat-divider>
+
+  <button mat-raised-button color="primary" (click)="start()" *ngIf="examFreshStart"><span translate>Start</span></button>
+  <button mat-raised-button color="primary" (click)="start()" *ngIf="examContinuation"><span translate>Continue</span></button>
+
+  <div *ngIf="examFinished" class="finished-container">
+    <div class="finished" translate>Already finished</div>
+    <div class="center">
+      <button mat-raised-button color="primary" (click)="result()"><span translate>Result</span></button>
+    </div>
+  </div>
+
+</div>

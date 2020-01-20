@@ -1,0 +1,73 @@
+<div *ngIf="working" >
+  <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+</div>
+
+<div *ngIf="examFinished" class="exam-finished center">
+  <div translate>Finished</div>
+</div>
+
+<div *ngIf="current && !working">
+
+  <div class="numbers-container">
+    <button mat-raised-button color="primary" (click)="prevQuestion()" [disabled]="answering"><span translate>Previous</span></button>
+    <div class="answered-questions"><span translate>Question points</span>: <span class="answered-number">{{ current.question.points }}</span></div>
+    <div> <span class="current-question">{{ questionNumber+1 }}</span> / <span class="total-question">{{ (studentRef | async)?.questionsIds.length }}</span></div>
+    <div class="answered-questions"><span translate>Answered</span>: <span class="answered-number">{{ (studentRef | async)?.questions }}</span></div>
+    <button mat-raised-button color="primary" (click)="nextQuestion()" [disabled]="answering"><span translate>Next</span></button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div *ngIf="answering" class="center">
+    <mat-progress-spinner></mat-progress-spinner>
+  </div>
+
+  <div *ngIf="!answering">
+    <div *ngIf="current.done" class="done center">
+      <div translate>Answered</div>
+    </div>
+
+    <markdown lineNumbers [start]="current.question.lineNumber" [data]="current.question.question" *ngIf="current.question.lineNumber"></markdown>
+    <markdown [data]="current.question.question" *ngIf="!current.question.lineNumber"></markdown>
+
+    <mat-divider></mat-divider>
+
+    <div class="answers">
+
+      <div *ngIf="current.question.type === TextType">
+        <mat-form-field>
+          <mat-label translate>Answer</mat-label>
+          <input type="text" matInput [(ngModel)]="current.answer">
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="current.question.type === RadioType">
+        <label class="label" translate>Answer</label>
+        <mat-radio-group class="radio-group" [(ngModel)]="current.answer">
+          <mat-radio-button color="primary" class="radio-button" *ngFor="let ans of current.question.answers" [value]="ans"> {{ ans }} </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div *ngIf="current.question.type === CheckType">
+        <label class="label" translate>Answers</label>
+        <div *ngFor="let answer of current.question.answers; let i = index" class="checkbox-group">
+          <mat-checkbox color="primary" class="checkbox-button" [checked]="current.answer && current.answer.includes(answer)" (change)="onChange(answer)"> {{ answer }} </mat-checkbox>
+        </div>
+      </div>
+
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" (click)="done()" [disabled]="hasNoNewAnswers()"><span translate>Confirm</span></button>
+      <button mat-raised-button color="accent" (click)="cancel()" *ngIf="hasNewAnswers()"><span translate>Cancel</span></button>
+
+      <span class="fill-remaining-space"></span>
+
+      <button mat-raised-button color="warn" (click)="finishTest()"><span translate>Finish test</span></button>
+
+    </div>
+  </div>
+
+</div>

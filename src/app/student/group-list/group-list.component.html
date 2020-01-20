@@ -1,0 +1,22 @@
+<div class="groups-container">
+  <mat-card class="group-card" *ngFor="let group of groups | async">
+    <mat-card-header>
+      <mat-card-title>
+        {{ group.name }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        <mat-chip-list [selectable]="false">
+          <mat-chip *ngFor="let label of group.labels">{{ label }}</mat-chip>
+        </mat-chip-list>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="content">
+        {{ group.start | firebaseDate:'yyyy-MM-dd' }} - {{ group.end | firebaseDate:'yyyy-MM-dd' }}
+      </div>
+      <div class="content">
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

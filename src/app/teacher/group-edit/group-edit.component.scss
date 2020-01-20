@@ -1,0 +1,33 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+
+  .button-row {
+    margin-top: 16px;
+
+    button {
+      margin-right: 8px;
+    }
+  }
+}
+
+.student {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  .student-name {
+    min-width: 200px;
+    flex-grow: 1;
+    margin: 8px;
+  }
+  .student-email {
+    min-width: 200px;
+    flex-grow: 1;
+    margin: 8px;
+  }
+}
+
+.labels {
+  width: 100%;
+}

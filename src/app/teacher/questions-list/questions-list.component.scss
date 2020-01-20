@@ -1,0 +1,26 @@
+table {
+  width: 100%;
+}
+
+.filter {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-header-cell {
+  padding-right: 8px;
+  padding-left:  8px;
+}
+
+.mat-cell {
+  padding: 4px 8px;
+}
+
+.row-action {
+  display: flex;
+}
+
+td.selection {
+  cursor: pointer;
+}
+

@@ -1,0 +1,91 @@
+<div class="filter">
+  <mat-checkbox [(ngModel)]="showAll" (change)="showOption()" ><span translate>Show closed groups also</span></mat-checkbox>
+</div>
+
+<div class="group-container">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let group of groups">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="panel-title">
+          <span class="name">{{ group.name }}</span>
+          <div *ngIf="group.start" class="start">
+            <span>{{ group.start | firebaseDate:'yyyy-MM-dd' }}</span>
+            -
+            <span>{{ group.end | firebaseDate:'yyyy-MM-dd' }}</span>
+          </div>
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="labels">
+        <mat-chip-list>
+          <mat-chip *ngFor="let label of group.labels">{{ label }}</mat-chip>
+        </mat-chip-list>
+      </div>
+
+      <div *ngIf="group.students && group.students.length > 0" class="table-container">
+        <h3 translate>Students</h3>
+        <table class="table">
+          <tr>
+            <th class="small">#</th>
+            <th translate>Name</th>
+            <th translate>Email</th>
+          </tr>
+          <tr *ngFor="let student of group.students; let i = index">
+            <td translate>{{ i + 1 }}</td>
+            <td translate>{{ student.name }}</td>
+            <td translate>{{ student.email }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div *ngIf="group.exams && group.exams.length > 0" class="table-container">
+        <h3 translate>Tests</h3>
+        <table class="table">
+          <tr>
+            <th class="small">#</th>
+            <th translate width="100%">Name</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let exam of group.exams; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><a routerLink="" (click)="goExam(exam)">{{ exam.test.name }}</a></td>
+            <td>
+              <button mat-icon-button aria-label="Delete" color="warn" (click)="deleteExam(group, i, $event)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="buttons-row">
+        <button mat-raised-button (click)="assign(group)"><span translate>Assign</span></button>
+        <span class="fill-remaining-space"></span>
+        <button mat-icon-button aria-label="Edit" (click)="edit(group)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div class="buttons-row">
+    <span class="fill-remaining-space"></span>
+    <button mat-icon-button (click)="onPrevious()" [disabled]="first">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onNext()" [disabled]="last">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+</div>
+
+
+<div class="global-add-button">
+  <button mat-mini-fab aria-label="Add" (click)="add()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

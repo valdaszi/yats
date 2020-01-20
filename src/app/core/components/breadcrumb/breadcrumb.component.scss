@@ -1,0 +1,34 @@
+$text-color: rgba(0,0,0,.87);
+
+.breadcrumb {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  list-style-type: none;
+
+  .breadcrumb-item {
+    display: inline;
+    // font-size: 66%;
+
+    a {
+      //color: white;
+      color: $text-color;
+      text-decoration: none;
+      position: relative;
+    }
+
+    &:before {
+      padding: 0 4px;
+      //color: white;
+      color: $text-color;
+      content: "\00a0\203a\00a0";
+    }
+
+    mat-icon {
+      font-size: 150%;
+      position: relative;
+      top: 4px;
+    }
+
+  }
+}

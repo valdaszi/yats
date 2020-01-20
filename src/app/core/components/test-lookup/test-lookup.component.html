@@ -1,0 +1,36 @@
+<div class="tests">
+
+  <table mat-table [dataSource]="dataSource" class="questions-table">
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let row; let i = index" class="position">{{ i + paginator.pageIndex * paginator.pageSize + 1 }}</td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> {{ 'Name' | translate }} </th>
+      <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+    </ng-container>
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> {{ 'Description' | translate }} </th>
+      <td mat-cell *matCellDef="let row"> {{ row.description }} </td>
+    </ng-container>
+    <!-- Questions Column -->
+    <ng-container matColumnDef="questions">
+      <th mat-header-cell *matHeaderCellDef> {{ 'Questions' | translate }} </th>
+      <td mat-cell *matCellDef="let row"> {{ row.questions }} </td>
+    </ng-container>
+    <!-- Duration Column -->
+    <ng-container matColumnDef="duration">
+      <th mat-header-cell *matHeaderCellDef> {{ 'Duration' | translate }} </th>
+      <td mat-cell *matCellDef="let row"> {{ row.duration }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="select(row)"></tr>
+  </table>
+
+  <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+</div>

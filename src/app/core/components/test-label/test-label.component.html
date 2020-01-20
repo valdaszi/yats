@@ -1,0 +1,14 @@
+<mat-card *ngIf="test" class="test-container">
+  <app-label [value]="test.name" class="label">
+    <label translate>Name</label>
+  </app-label>
+  <app-label [value]="test.description" class="label">
+    <label translate>Description</label>
+  </app-label>
+  <app-label [value]="test.questions" class="label">
+    <label translate>Questions</label>
+  </app-label>
+  <app-label [value]="test.points" class="label">
+    <label translate>Points</label>
+  </app-label>
+</mat-card>

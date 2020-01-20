@@ -1,0 +1,70 @@
+$primary-color: rgb(63, 81, 181);
+
+.not-started {
+  color: red;
+}
+.started {
+  color: $primary-color;
+}
+.finished {
+  color: green;
+}
+
+.points {
+  margin: 0 8px;
+}
+
+.table {
+  display: table;
+  font-size: 12px;
+  width: 100%;
+}
+.row {
+  display: table-row;
+  cursor: pointer;
+}
+.cell {
+  display: table-cell;
+  padding: 4px;
+  margin: 0 8px;
+}
+// .email {
+// }
+.email-inline {
+  display: none;
+}
+.right {
+  text-align: right;
+}
+.percent {
+  font-size: 120%;
+}
+.bar {
+  width: 100px;
+}
+
+
+@media screen and (max-width: 640px) {
+  .cell {
+    padding: 2px;
+  }
+  .email {
+    display: none;
+  }
+  .email-inline {
+    font-size: 75%;
+    display: block
+  }
+  .bar {
+    width: 50px;
+  }
+  .name {
+    max-width: 120px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .bar {
+    display: none;
+  }
+}

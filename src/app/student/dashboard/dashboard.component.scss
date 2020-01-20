@@ -1,0 +1,12 @@
+.exam-card {
+  margin: 16px 0;
+  background-color: #f0f8ff;
+
+  .content {
+    margin: 0 16px;
+  }
+
+  &.finished {
+    background-color:#f0f0f0;
+  }
+}
