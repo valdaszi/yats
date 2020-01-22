@@ -1,26 +1,16 @@
-table {
-  width: 100%;
+.questions-container {
+  padding-bottom: 48px;
 }
 
-.filter {
-  font-size: 14px;
-  width: 100%;
+.question {
+  margin: 16px 0;
 }
 
-.mat-header-cell {
-  padding-right: 8px;
-  padding-left:  8px;
-}
-
-.mat-cell {
-  padding: 4px 8px;
-}
-
-.row-action {
+.top {
   display: flex;
+  flex-direction: row;
 }
 
-td.selection {
-  cursor: pointer;
+.index {
+  font-size: 150%;
 }
-

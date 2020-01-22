@@ -30,6 +30,15 @@ Create and Deploy Cloud Function using script that is defined in functions/packa
   npm run deploy
 ```
 
+Deploy only specific function:
+```
+  firebase deploy --only functions:adminGroupsAddUid
+```
+
+## Test cloud function locally
+
+
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

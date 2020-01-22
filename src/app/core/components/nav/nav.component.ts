@@ -19,6 +19,7 @@ export class NavComponent implements OnInit, OnDestroy {
   componentMenu: Menu = { title: '', hideAuth: false, topMenu: [] }
   isSmall: boolean
   displayName: string
+  photoURL: string
 
   private menuSubscription: Subscription
   private authSubscription: Subscription
@@ -47,6 +48,7 @@ export class NavComponent implements OnInit, OnDestroy {
         this.displayName = user.displayName
         this.isAdmin = user.roles.admin
         this.isTeacher = user.roles.teacher
+        this.photoURL = user.photoURL
       })
   }
 

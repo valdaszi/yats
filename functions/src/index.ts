@@ -198,8 +198,7 @@ export const getExamQuestions = functionInRegion.https.onCall(async (data: { exa
   }
 
   // read questions
-  const questions = (await db.collection(TESTS).doc(data.test).collection(QUESTIONS).get()).docs
-  return questions.map(q => {
+  return (await db.collection(TESTS).doc(data.test).collection(QUESTIONS).get()).docs.map(q => {
     return {
       id: q.id,
       ... q.data()
@@ -544,3 +543,31 @@ export const onExamWrite = functionInRegion.firestore
       return transaction.update(sfDocRef, { exams });
     })
   });
+
+/**
+ * Admin Services
+ */
+
+// export const adminGroupsAddUid = functionInRegion.https.onCall(async (_data, context) => {
+//   const userMap: { [key: string]: admin.auth.UserRecord } = {};
+//   const users = (await admin.auth().listUsers()).users
+//   users.forEach(u => {
+//     if (u.email) { userMap[u.email.toLowerCase()] = u }
+//   });
+//   console.log('Found ' + users.length + ' users')
+
+//   const batch = db.batch();
+//   (await db.collection(GROUPS).get()).docs.forEach(doc => {
+//     const group = doc.data() as Group
+//     group.students.forEach(student => {
+//       const user = userMap[student.email.toLowerCase()]
+//       if (user) { student.uid = user.uid }
+//     })
+//     batch.update(doc.ref, { students: group.students });
+//   })
+//   const writeResult = await batch.commit()
+//   return { updated: writeResult.length }
+// });
+
+// export const adminGroupsAddUid = functionInRegion.https.onCall(async (_data, context) => {
+// }

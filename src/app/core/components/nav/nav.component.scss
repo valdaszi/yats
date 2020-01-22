@@ -16,11 +16,10 @@ a.component-menu {
   font-size: 14px;
 }
 
-
-.fill-remaining-space {
-  /* This fills the remaining space, by using flexbox.
-     Every toolbar row uses a flexbox row layout. */
-  flex: 1 1 auto;
+.photo {
+  max-height: 32px;
+  border-radius: 50%;
+  margin-left: 8px;
 }
 
 mat-toolbar.toolbar {

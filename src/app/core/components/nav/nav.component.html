@@ -10,7 +10,8 @@
 
     <button *ngIf="showLogout()" mat-button [matMenuTriggerFor]="menu">
         <span>{{ displayName }}</span>
-        <mat-icon>more_vert</mat-icon>
+        <!-- <mat-icon>more_vert</mat-icon> -->
+        <img class="photo" *ngIf="photoURL" [src]="photoURL">
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="profile()">

@@ -54,6 +54,12 @@ export class AuthService {
           student: idTokenResult.claims.student
         }
       }
+      const body = document.querySelector('body')
+      if (this.currentUser.roles.student) {
+        body.onmousedown = body.onselectstart = () => false
+      } else {
+        body.onmousedown = body.onselectstart = undefined
+      }
       localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
       log.debug(JSON.stringify(this.currentUser))
       return this.currentUser
