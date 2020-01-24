@@ -1,0 +1,128 @@
+@import '~src/app-theme-variables';
+
+.answers {
+  padding: 8px 0;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+}
+
+.radio-button {
+  margin: 8px;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 16px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+}
+
+.checkbox-button {
+  margin-left: 8px;
+}
+
+mat-divider {
+  margin: 16px 0;
+}
+
+.numbers-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.numbers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $primary;
+}
+.current-question {
+  font-size: 150%;
+}
+.total-question {
+  font-size: 150%;
+}
+.answered-points, .student-points, .question-points {
+  font-size: 150%;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.exam-finished {
+  font-size: 120%;
+  padding: 12px;
+  margin: 8px 0;
+  background-color: $accent;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+
+  .exam-student-points, .exam-total-points, .exam-percent {
+    font-size: 120%;
+    margin: 0 2px;
+  }
+
+  .exam-percent {
+    font-weight: 900;
+  }
+
+  .text {
+    margin: 0 4px;
+  }
+
+  .student-name {
+    font-weight: 900;
+  }
+}
+
+.answer-label {
+  margin-bottom: 16px;
+}
+
+.answer-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .question-type {
+    padding: 8px;
+    color: $primary;
+  }
+  .answer-result {
+    padding: 8px;
+  }
+}
+
+.answer-text {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  white-space: normal;
+}
+
+.primary {
+  color: $primary;
+}
+.correct {
+  color: $primary;
+}
+.missed {
+  color: $warn;
+}
+.wrong {
+  color: $warn;
+}

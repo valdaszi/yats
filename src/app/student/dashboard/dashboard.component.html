@@ -1,5 +1,5 @@
 <div class="exams-container">
-  <mat-card class="exam-card" [class.finished]="exam.finished" *ngFor="let exam of exams | async">
+  <mat-card class="exam-card" *ngFor="let exam of exams | async">
     <mat-card-header>
       <mat-card-title>
         {{ exam.test.name }}

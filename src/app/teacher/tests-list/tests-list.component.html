@@ -1,6 +1,7 @@
 
 <div class="teacher-container">
   <mat-card class="teacher-card" *ngFor="let test of tests">
+
     <mat-card-header>
       <mat-card-title>
         {{ test.name }}
@@ -11,11 +12,13 @@
           </mat-chip-list>
       </mat-card-subtitle>
     </mat-card-header>
+
     <mat-card-content>
-        <p>{{ test.description }}</p>
-        <p><span translate>Questions</span>: <strong>{{test.questions}}</strong></p>
-        <p><span translate>Points</span>: <strong>{{test.points}}</strong></p>
+      <p>{{ test.description }}</p>
+      <p><span translate>Questions</span>: <strong>{{test.questions}}</strong></p>
+      <p><span translate>Points</span>: <strong>{{test.points}}</strong></p>
     </mat-card-content>
+
     <mat-card-actions>
       <button mat-raised-button (click)="showQuestions(test)"><span translate>Questions</span></button>
       <!-- <button mat-raised-button (click)="assign(test)"><span translate>Assign</span></button> -->
@@ -24,6 +27,7 @@
           <mat-icon>edit</mat-icon>
       </button>
     </mat-card-actions>
+
   </mat-card>
 </div>
 

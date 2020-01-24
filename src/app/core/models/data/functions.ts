@@ -1,4 +1,5 @@
 import { QuestionType } from './question'
+import { TestCalculations } from './test'
 
 export interface RegStudentAnswerParams {
   exam: string,
@@ -11,4 +12,11 @@ export interface RegStudentAnswerParams {
 export interface ExamFinishParams {
   exam: string,
   test: string,
+}
+
+export interface TestQuestionResultParams {
+  test: string
+  question: string
+  calculations: TestCalculations
+  answers: string[] | string
 }

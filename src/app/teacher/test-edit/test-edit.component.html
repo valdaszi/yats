@@ -16,6 +16,14 @@
 
     <app-labels-edit [model]="model"></app-labels-edit>
 
+    <mat-checkbox color="primary" [(ngModel)]="model.calculations.penalties" name="penalties">
+      <span translate>Penalties</span>
+    </mat-checkbox>
+
+    <mat-checkbox color="primary" [(ngModel)]="model.calculations.proportional" name="proportional">
+      <span translate>Proportional</span>
+    </mat-checkbox>
+
     <div class="button-row">
       <button mat-raised-button color="primary" [disabled]="!testForm.form.valid" (click)="save()"><span translate>Save</span></button>
       <button mat-raised-button color="warn" type="button" (click)="cancel()"><span translate>Cancel</span></button>

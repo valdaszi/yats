@@ -93,6 +93,8 @@ export class GroupsListComponent implements OnInit, OnDestroy {
       .snapshotChanges()
       .subscribe(data => {
 
+        if (!data || data.length === 0) { return }
+
         if (!back) {
           this.firstVisibleDocRef = data[0].payload.doc
           this.lastVisibleDocRef = data.length > this.pageSize ? data[this.pageSize - 1].payload.doc : undefined
@@ -112,7 +114,6 @@ export class GroupsListComponent implements OnInit, OnDestroy {
           this.first = data.length <= this.pageSize
           this.last = false
         }
-
 
         const groups = data.map(e => {
           return {

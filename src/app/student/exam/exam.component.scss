@@ -1,3 +1,5 @@
+@import '~src/app-theme-variables';
+
 .exam-container {
   padding: 0 16px;
 }
@@ -11,11 +13,9 @@ mat-divider {
   flex-flow: column;
 
   .finished {
-    background-color: green;
-    color: white;
+    background-color: $accent;
     padding: 12px;
-    margin: 12px 0;
+    margin-bottom: 12px;
     text-align: center;
   }
 }
-

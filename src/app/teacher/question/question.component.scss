@@ -1,3 +1,5 @@
+@import '~src/app-theme-variables';
+
 .answers {
   padding: 8px 0;
 }
@@ -13,7 +15,7 @@
 }
 
 .buttons {
-  margin-top: 16px;
+  margin: 0 0 16px 0;
 }
 
 .checkbox-group {
@@ -24,4 +26,17 @@
 
 .checkbox-button {
   margin-left: 8px;
+}
+
+.answer-text {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  white-space: normal;
+}
+
+.points-container {
+  margin: 8px 0;
+  .points {
+    background-color: $accent;
+    padding: 12px;
+  }
 }

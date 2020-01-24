@@ -16,10 +16,13 @@ const log = new Logger('QuestionComponent')
 })
 export class QuestionComponent implements OnInit {
 
+  working: boolean
   testId: string
   test: Test
-  model: Question
-  answer: string
+  question: Question
+  answers: string | string[]
+  points: { points?: number }
+  pointsWorking: boolean
 
   CheckType = QuestionType.Check
   RadioType = QuestionType.Radio
@@ -31,25 +34,23 @@ export class QuestionComponent implements OnInit {
     private testsService: TestsService,
     private menuService: MenuService
   ) {
+    this.working = true
     const navigation = this.router.getCurrentNavigation()
     const state = navigation.extras.state as { test: Test, question: Question }
     if (state && state.test && state.question) {
-      this.testId = state.test.id
       this.test = Object.assign({}, state.test)
-      this.model = Object.assign({}, state.question)
-      log.debug('[state]', this.model)
+      this.testId = this.test.id
+      this.question = Object.assign({}, state.question)
+      if (this.question.type === QuestionType.Check) {
+        this.answers = []
+      }
+      this.working = false
+      log.debug('[state]', this.question)
 
     } else {
       this.route.params.subscribe(params => {
-        this.testsService.getQuestion(params.id, params.qid).valueChanges().pipe(take(1)).subscribe(model => {
-          log.debug('[params]', params)
-          this.testId = params.id
-          this.model = Object.assign({} as Question, model)
-          if (params.qid) {
-            this.model.id = params.qid
-          }
-          log.debug('[db]', this.model)
-        })
+        log.debug('[params]', params)
+        this.getData(params.id, params.qid)
       })
     }
    }
@@ -58,12 +59,47 @@ export class QuestionComponent implements OnInit {
     this.menuService.menu({})
   }
 
-  ok() {
-    this.router.navigate(['/teacher/test', this.testId], {
-      state: {
-        model: this.test
+  async getData(testId: string, questionId: string) {
+    this.testsService.getQuestion(testId, questionId).get().subscribe(async (question) => {
+      this.testId = testId
+      this.question = Object.assign({} as Question, question.data())
+      this.question.id = questionId
+      if (this.question.type === QuestionType.Check) {
+        this.answers = []
       }
+      this.test = {
+        id: testId,
+        ... (await this.testsService.get(testId).get().toPromise()).data()
+      } as Test
+
+      this.working = false
     })
+  }
+
+  onChange(answer: string) {
+    if (!Array.isArray(this.answers)) {
+      this.answers = []
+    }
+    const index = this.answers.indexOf(answer)
+    if (index < 0) {
+      this.answers.push(answer)
+    } else {
+      this.answers.splice(index, 1)
+    }
+  }
+
+  async ok() {
+    this.pointsWorking = true
+    try {
+      this.points = await this.testsService.testQuestionResult({
+        test: this.test.id,
+        question: this.question.id,
+        calculations: this.test.calculations,
+        answers: this.answers
+      }).toPromise()
+    } finally {
+      this.pointsWorking = false
+    }
   }
 
 }

@@ -1,5 +1,4 @@
-
-<div *ngIf="working" >
+<div *ngIf="working" class="top-progress-bar-working">
   <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
 </div>
 
@@ -22,7 +21,7 @@
 
   <div *ngIf="examFinished" class="finished-container">
     <div class="finished" translate>Already finished</div>
-    <div class="center">
+    <div>
       <button mat-raised-button color="primary" (click)="result()"><span translate>Result</span></button>
     </div>
   </div>

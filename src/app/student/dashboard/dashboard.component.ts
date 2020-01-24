@@ -43,7 +43,8 @@ export class DashboardComponent implements OnInit {
           .snapshotChanges()
           .pipe(
             map(docs => docs
-              .filter(e => (e.payload.doc.data() as Group).end >= firebase.firestore.Timestamp.now())
+              .filter(e => !(e.payload.doc.data() as Group).end ||
+                (e.payload.doc.data() as Group).end >= firebase.firestore.Timestamp.now())
               .flatMap(e => (e.payload.doc.data() as Group).exams)
               .filter(e => e && !e.finished)
               // .sort((o1, o2) => {
@@ -53,6 +54,12 @@ export class DashboardComponent implements OnInit {
           )
       })
     )
+    this.test()
+  }
+
+  async test() {
+    const items = await this.exams.toPromise();
+    console.log(items)
   }
 
   go(exam: GroupExam) {

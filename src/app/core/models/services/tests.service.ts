@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core'
-import { AngularFirestore } from '@angular/fire/firestore'
 
-import { Test, TESTS, Question, QUESTIONS, Answer, ANSWERS } from '../data'
+import { AngularFirestore } from '@angular/fire/firestore'
+import { AngularFireFunctions } from '@angular/fire/functions'
+
+import { Test, TESTS, Question, QUESTIONS, Answer, ANSWERS, TestQuestionResultParams } from '../data'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TestsService {
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private functions: AngularFireFunctions
+  ) { }
 
   list() {
     return this.firestore.collection<Test>(`${TESTS}`, ref => ref.orderBy('name'))
@@ -70,6 +75,11 @@ export class TestsService {
 
   deleteQuestionAnswer(id: string, qid: string) {
     return this.firestore.doc(`${TESTS}/${id}/${ANSWERS}/${qid}`).delete()
+  }
+
+  // check question result
+  testQuestionResult(param: TestQuestionResultParams) {
+    return this.functions.httpsCallable('testQuestionResult')(param)
   }
 
 }

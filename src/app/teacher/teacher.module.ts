@@ -23,6 +23,7 @@ import { MatExpansionModule } from '@angular/material/expansion'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 import { MarkdownModule } from 'ngx-markdown'
 
@@ -73,6 +74,7 @@ import { ExamReviewComponent } from './exam-review/exam-review.component'
     MatAutocompleteModule,
     MatDatepickerModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
 
     CoreModule,
 

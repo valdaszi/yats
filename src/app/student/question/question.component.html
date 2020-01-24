@@ -1,4 +1,4 @@
-<div *ngIf="working" >
+<div *ngIf="working" class="top-progress-bar-working">
   <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
 </div>
 
@@ -19,7 +19,7 @@
   <mat-divider></mat-divider>
 
   <div *ngIf="answering" class="center">
-    <mat-progress-spinner></mat-progress-spinner>
+    <mat-spinner></mat-spinner>
   </div>
 
   <div *ngIf="!answering">
@@ -37,21 +37,25 @@
       <div *ngIf="current.question.type === TextType">
         <mat-form-field>
           <mat-label translate>Answer</mat-label>
-          <input type="text" matInput [(ngModel)]="current.answer">
+          <input class="answer-text" type="text" matInput [(ngModel)]="current.answer">
         </mat-form-field>
       </div>
 
       <div *ngIf="current.question.type === RadioType">
         <label class="label" translate>Answer</label>
         <mat-radio-group class="radio-group" [(ngModel)]="current.answer">
-          <mat-radio-button color="primary" class="radio-button" *ngFor="let ans of current.question.answers" [value]="ans"> {{ ans }} </mat-radio-button>
+          <mat-radio-button color="primary" class="radio-button" *ngFor="let answer of current.question.answers" [value]="answer">
+            <code class="answer-text">{{ answer }}</code>
+          </mat-radio-button>
         </mat-radio-group>
       </div>
 
       <div *ngIf="current.question.type === CheckType">
         <label class="label" translate>Answers</label>
-        <div *ngFor="let answer of current.question.answers; let i = index" class="checkbox-group">
-          <mat-checkbox color="primary" class="checkbox-button" [checked]="current.answer && current.answer.includes(answer)" (change)="onChange(answer)"> {{ answer }} </mat-checkbox>
+        <div *ngFor="let answer of current.question.answers" class="checkbox-group">
+          <mat-checkbox color="primary" class="checkbox-button" [checked]="current.answer && current.answer.includes(answer)" (change)="onChange(answer)">
+            <code class="answer-text">{{ answer }}</code>
+          </mat-checkbox>
         </div>
       </div>
 

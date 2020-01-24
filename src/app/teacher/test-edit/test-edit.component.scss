@@ -2,7 +2,15 @@
   display: flex;
   flex-direction: column;
 
-  .button-row button {
-    margin-right: 8px;
+  .button-row {
+    margin-top: 24px;
+    
+    button {
+      margin-right: 8px;
+    }
+  }
+
+  mat-checkbox {
+    margin: 8px 0;
   }
 }

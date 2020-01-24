@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { take, map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
 
-import { MatPaginator } from '@angular/material/paginator'
-import { MatTableDataSource } from '@angular/material/table'
 import { MatDialog } from '@angular/material/dialog'
 
 import { MenuService } from '@app/core/services/menu.service'
@@ -19,14 +17,8 @@ import { DialogConfirmComponent } from '@app/core/components/dialog-confirm/dial
 })
 export class QuestionsListComponent implements OnInit {
 
-  // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator
-
   test: Test
-  // questions: Question[]
-  // dataSource: MatTableDataSource<Question>
   questions: Observable<Question[]>
-
-  displayedColumns: string[] = ['position', 'question', 'points', 'actions']
 
   constructor(
     private testsService: TestsService,
@@ -58,16 +50,6 @@ export class QuestionsListComponent implements OnInit {
   }
 
   private getQuestions(testId: string) {
-    // this.testsService.listQuestions(testId).snapshotChanges().subscribe(data => {
-    //   this.questions = data.map(e => {
-    //     return {
-    //       id: e.payload.doc.id,
-    //       ...e.payload.doc.data()
-    //     } as Question
-    //   })
-    //   this.dataSource = new MatTableDataSource<Question>(this.questions)
-    //   this.dataSource.paginator = this.paginator
-    // })
     this.questions = this.testsService.listQuestions(testId).snapshotChanges()
       .pipe(
         map(questions => questions

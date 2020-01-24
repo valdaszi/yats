@@ -1,6 +1,8 @@
+@import '~src/app-theme-variables';
+
 .exam-card {
   margin: 16px 0;
-  background-color: #f0f8ff;
+  background-color: $primary-very-light;
 
   .content {
     margin: 0 16px;

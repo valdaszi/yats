@@ -1,4 +1,4 @@
-import { Test } from './test'
+import { Test, TestCalculations } from './test'
 import { Student } from './student'
 import { Choice } from './answer'
 
@@ -33,11 +33,13 @@ export interface ExamResult extends Student {
   finished?: boolean
   questionsIds?: ExamResultQuestionsInfo[] // shuffled questions and results info
   questionPoints?: number
+  calculations?: TestCalculations
 }
 
 
 export interface AnswerResult {
   questionPoints: number  // question max points
+  penaltyPoints?: number  // question penalty points
   correct?: Choice[]      // correct answer
   student?: Choice[]      // student answer
   studentPoints?: number  // points collected

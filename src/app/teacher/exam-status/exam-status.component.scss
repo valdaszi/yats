@@ -1,13 +1,13 @@
-$primary-color: rgb(63, 81, 181);
+@import '~src/app-theme-variables';
 
 .not-started {
-  color: red;
+  color: $warn;
 }
 .started {
-  color: $primary-color;
+  color: $accent;
 }
 .finished {
-  color: green;
+  color: $primary;
 }
 
 .points {

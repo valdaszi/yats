@@ -2,8 +2,9 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import {
   Group, GROUPS, Exam, EXAMS, EXAM_RESULTS, TESTS, QUESTIONS, TEACHERS,
-  ExamResultQuestionsInfo, ExamResult, Choice, RegStudentAnswerParams, ExamFinishParams, Question,
-  Answer, ANSWERS,
+  ExamResultQuestionsInfo, ExamResult, Choice,
+  RegStudentAnswerParams, ExamFinishParams, TestQuestionResultParams, TestCalculations,
+  Question, Answer, ANSWERS
 } from '../../src/app/core/models/data'
 
 const functionInRegion = functions.region('europe-west1') //, 'europe-west2')
@@ -74,6 +75,10 @@ function isAuthUser(context: functions.https.CallableContext): any {
   return user
 }
 
+/**
+ * Get user info from request context.
+ * If user is not student or teacher or admin - throw exception
+ */
 async function getUser(context: functions.https.CallableContext): Promise<admin.auth.UserRecord> {
   const user = isAuthUser(context);
 
@@ -83,6 +88,10 @@ async function getUser(context: functions.https.CallableContext): Promise<admin.
   }
   if (!userRecord.email) {
     throw new functions.https.HttpsError("unauthenticated", "No email")
+  }
+  const claims = userRecord.customClaims as UserCustomClaims
+  if (!claims || claims.admin !== true && claims.teacher !== true && claims.student !== true) {
+    throw new functions.https.HttpsError("unauthenticated", "Unknown user type")
   }
   return userRecord
 }
@@ -105,6 +114,34 @@ function shuffle(array: any[]) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]]
   }
+}
+
+function answerPointsCalculator(question: { questionPoints: number, penaltyPoints?: number }, calculations: TestCalculations, correct: string[], check: string[] | string): number {
+  const answer: string[] = Array.isArray(check) ? check.filter(e => e > '') : [check]
+  const hits = answer.filter(a => correct.includes(a)).length
+
+  let points = 0
+  if (hits === correct.length) {
+    points = question.questionPoints
+  } else {
+    if (calculations && calculations.proportional) {
+      const answerValue = question.questionPoints / correct.length
+      if (calculations && calculations.penalties) {
+        points = Math.round(
+          (hits
+            - (answer.length - hits)  // wrong answers
+            // - (correctAnswers.length - hits)   // missed answers
+          ) * answerValue * 10
+        ) / 10
+      } else {
+        points = Math.round( hits * answerValue * 10) / 10
+      }
+    } else {
+      points = calculations && calculations.penalties ? -Math.abs(question.penaltyPoints || 0) : 0
+    }
+  }
+
+  return points;
 }
 
 // Exports:
@@ -153,7 +190,8 @@ export const prepareExamQuestions = functionInRegion.https.onCall(async (data: {
     questionsIds.push({
       id: q.id,
       result: {
-        questionPoints: (q.data() as Question).points
+        questionPoints: (q.data() as Question).points,
+        penaltyPoints: (q.data() as Question).penaltyPoints,
       }
     })
   )
@@ -168,6 +206,7 @@ export const prepareExamQuestions = functionInRegion.https.onCall(async (data: {
     name: userRecord.displayName,
     photoURL: userRecord.photoURL,
     questionsIds: questionsIds,
+    calculations: exam.test.calculations
   })
 
   return (await examResultRef.get()).data()
@@ -260,6 +299,35 @@ export const regStudentAnswer = functionInRegion.https.onCall(async (data: RegSt
 })
 
 /**
+ * testQuestionResult - calculate result points of one particular question
+ */
+export const testQuestionResult = functionInRegion.https.onCall(async (data: TestQuestionResultParams, context: functions.https.CallableContext) => {
+  await getUser(context)
+
+  const questionRef = db.collection(TESTS).doc(data.test).collection(QUESTIONS).doc(data.question)
+  const questionDoc = await questionRef.get();
+  if (!questionDoc.exists) {
+    throw new functions.https.HttpsError("not-found", `Test ${data.test} question ${data.question} not found.`)
+  }
+  const question = questionDoc.data() as Question
+
+  const answerRef = db.collection(TESTS).doc(data.test).collection(ANSWERS).doc(data.question)
+  const answerDoc = await answerRef.get();
+  if (!answerDoc.exists) {
+    throw new functions.https.HttpsError("not-found", `Test ${data.test} question ${data.question} answer not found.`)
+  }
+  const answer = answerDoc.data() as Answer
+
+  const correct = (answer.answers.length === 1 ? answer.answers : answer.answers.filter(a => a.correct)).map(a => a.answer)
+  const points = answerPointsCalculator({
+    questionPoints: question.points,
+    penaltyPoints: question.penaltyPoints
+  }, data.calculations, correct, data.answers)
+
+  return {points}
+})
+
+/**
  * examFinish
  */
 export const examFinish = functionInRegion.https.onCall(async (data: ExamFinishParams, context: functions.https.CallableContext) => {
@@ -293,6 +361,13 @@ export const examFinish = functionInRegion.https.onCall(async (data: ExamFinishP
     throw new functions.https.HttpsError("not-found", `No answers of Exam ${data.exam} questions.`)
   }
 
+  const examRef = db.collection(EXAMS).doc(data.exam)
+  const examDoc = await examRef.get();
+  if (!examDoc.exists) {
+    throw new functions.https.HttpsError("not-found", `Exam ${data.exam} not found.`)
+  }
+  const exam = examDoc.data() as Exam
+
   // calculating exam result
   let points = 0
   let questionPoints = 0
@@ -312,19 +387,12 @@ export const examFinish = functionInRegion.https.onCall(async (data: ExamFinishP
       return
     }
 
-    const hits = qid.result.student.filter(a => correctAnswers.includes(a.answer)).length
+    const studentAnswers: string[] = qid.result.student.filter(a => a.answer > '').map(a => a.answer)
 
-    if (hits === correctAnswers.length) {
-      qid.result.studentPoints = qid.result.questionPoints
-    } else {
-      const answerValue = qid.result.questionPoints / correctAnswers.length
-      qid.result.studentPoints = Math.round(
-        (hits
-          - (qid.result.student.length - hits)  // wrong answers
-          // - (correctAnswers.length - hits)   // missed answers
-        ) * answerValue * 10
-      ) / 10
-    }
+    qid.result.studentPoints = answerPointsCalculator({
+      questionPoints: qid.result.questionPoints,
+      penaltyPoints: qid.result.penaltyPoints
+    }, exam.test.calculations || {}, correctAnswers, studentAnswers)
 
     points += qid.result.studentPoints
   })

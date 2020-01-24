@@ -118,44 +118,37 @@ export class AuthService {
     return this.currentUser && this.currentUser.displayName || ''
   }
 
-  authGithub() {
-    return this.authLogin(new auth.GithubAuthProvider())
-  }
+  // authGithub() {
+  //   return this.authLogin(new auth.GithubAuthProvider())
+  // }
 
-  authGoogle() {
-    return this.authLogin(new auth.GoogleAuthProvider())
-  }
+  // authGoogle() {
+  //   return this.authLogin(new auth.GoogleAuthProvider())
+  // }
 
-  // Auth logic to run auth providers
-  async authLogin(provider: firebase.auth.AuthProvider) {
-    try {
-      const userCredential = await this.afAuth.auth.signInWithPopup(provider)
-      const isNewUser = userCredential.additionalUserInfo.isNewUser
+  // // Auth logic to run auth providers
+  // async authLogin(provider: firebase.auth.AuthProvider) {
+  //   try {
+  //     const userCredential = await this.afAuth.auth.signInWithPopup(provider)
+  //     await this.go(userCredential, userCredential.additionalUserInfo.isNewUser ? 3 : 1)
+  //     log.info(userCredential.user)
+  //   } catch (e) {
+  //     log.error('Error! ' + e.message)
+  //   }
+  // }
 
-      // const user = await this.getUserIdTokenResult(userCredential.user, isNewUser)
-      await this.go(userCredential, isNewUser, isNewUser ? 3 : 1)
-
-      log.info(userCredential.user)
-
-    } catch (e) {
-      log.error('Error! ' + e.message)
+  async go(userCredential: auth.UserCredential, retryCount: number, timeout: number = 2000) {
+    const user = await this.getUserIdTokenResult(userCredential.user, userCredential.additionalUserInfo.isNewUser)
+    if (user.roles.admin === true) {
+      this.ngZone.run(() => this.router.navigate(['/admin']))
+    } else if (user.roles.teacher === true) {
+      this.ngZone.run(() => this.router.navigate(['/teacher']))
+    } else if (user.roles.student === true) {
+      this.ngZone.run(() => this.router.navigate(['/student']))
+    } else {
+      if (retryCount <= 0) { return }
+      log.debug('retrying after ' + timeout + 'ms')
+      setTimeout(() => this.go(userCredential, --retryCount, timeout + 1000), timeout)
     }
-  }
-
-  async go(userCredential: auth.UserCredential, refresh: boolean, retryCount: number, timeout: number = 2000) {
-    const user = await this.getUserIdTokenResult(userCredential.user, refresh)
-    this.ngZone.run(() => {
-      if (user.roles.admin === true) {
-        this.router.navigate(['/admin'])
-      } else if (user.roles.teacher === true) {
-        this.router.navigate(['/teacher'])
-      } else if (user.roles.student === true) {
-        this.router.navigate(['/student'])
-      } else {
-        if (retryCount <= 0) { return }
-        log.debug('retrying after ' + timeout + 'ms')
-        setTimeout(() => this.go(userCredential, refresh, --retryCount, timeout + 1000), timeout)
-      }
-    })
   }
 }

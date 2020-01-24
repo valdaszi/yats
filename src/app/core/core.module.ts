@@ -19,6 +19,8 @@ import { MatChipsModule } from '@angular/material/chips'
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule } from '@angular/material/paginator'
 
+import { MarkdownModule } from 'ngx-markdown'
+
 import { NavComponent } from './components/nav/nav.component'
 import { MessagesComponent } from './components/messages/messages.component'
 import { LabelComponent } from './components/label/label.component'
@@ -28,7 +30,8 @@ import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confi
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { LabelsEditComponent } from './components/labels-edit/labels-edit.component';
 import { FirebaseDatePipe } from './pipes/firebase-date.pipe';
-import { TestLookupComponent } from './components/test-lookup/test-lookup.component'
+import { TestLookupComponent } from './components/test-lookup/test-lookup.component';
+import { ExamStudentReviewComponent } from './components/exam-student-review/exam-student-review.component'
 
 
 @NgModule({
@@ -37,7 +40,10 @@ import { TestLookupComponent } from './components/test-lookup/test-lookup.compon
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+
     TranslateModule.forChild(),
+    MarkdownModule.forChild(),
+
     RouterModule,
 
     // angular material:
@@ -65,7 +71,8 @@ import { TestLookupComponent } from './components/test-lookup/test-lookup.compon
     BreadcrumbComponent,
     LabelsEditComponent,
     FirebaseDatePipe,
-    TestLookupComponent
+    TestLookupComponent,
+    ExamStudentReviewComponent
   ],
   entryComponents: [
     DialogConfirmComponent
@@ -80,7 +87,8 @@ import { TestLookupComponent } from './components/test-lookup/test-lookup.compon
     BreadcrumbComponent,
     LabelsEditComponent,
     FirebaseDatePipe,
-    TestLookupComponent
+    TestLookupComponent,
+    ExamStudentReviewComponent
   ],
   providers: []
 })
