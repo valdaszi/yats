@@ -4,7 +4,7 @@ import {
   Group, GROUPS, Exam, EXAMS, EXAM_RESULTS, TESTS, QUESTIONS, TEACHERS,
   ExamResultQuestionsInfo, ExamResult, Choice,
   RegStudentAnswerParams, ExamFinishParams, TestQuestionResultParams, TestCalculations,
-  Question, Answer, ANSWERS
+  Question, Answer, ANSWERS, AnswerResult
 } from '../../src/app/core/models/data'
 
 const functionInRegion = functions.region('europe-west1') //, 'europe-west2')
@@ -96,6 +96,25 @@ async function getUser(context: functions.https.CallableContext): Promise<admin.
   return userRecord
 }
 
+async function getStudent(context: functions.https.CallableContext): Promise<admin.auth.UserRecord> {
+  const userRecord = await getUser(context);
+  const claims = userRecord.customClaims as UserCustomClaims
+  if (!claims || claims.student !== true) {
+    throw new functions.https.HttpsError("unauthenticated", "Not a Student")
+  }
+  return userRecord
+}
+
+async function getTeacher(context: functions.https.CallableContext): Promise<admin.auth.UserRecord> {
+  const userRecord = await getUser(context);
+  const claims = userRecord.customClaims as UserCustomClaims
+  if (!claims || claims.teacher !== true) {
+    throw new functions.https.HttpsError("unauthenticated", "Not a Teacher")
+  }
+  return userRecord
+}
+
+
 function subtractPoints(n1: any, n2: any) {
   return (!n1 || !n1.points ? 0 : n1.points) - (!n2 || !n2.points ? 0 : n2.points)
 }
@@ -151,7 +170,7 @@ function answerPointsCalculator(question: { questionPoints: number, penaltyPoint
  * Changes will be seen after logout/login.
  */
 export const changeUserName = functionInRegion.https.onCall(async (data: {name: string}, context: functions.https.CallableContext) => {
-  const user = isAuthUser(context)
+  const user = await getUser(context)
   await admin.auth().updateUser(user.uid, { displayName: data.name })
   return { message: `User ${data.name} name has been updated!` }
 })
@@ -186,15 +205,16 @@ export const prepareExamQuestions = functionInRegion.https.onCall(async (data: {
   // read questions first
   const questionsIds: ExamResultQuestionsInfo[] = []
   const questions = await db.collection(TESTS).doc(data.test).collection(QUESTIONS).get()
-  questions.forEach(q =>
-    questionsIds.push({
+  questions.forEach(q => {
+    const question = q.data() as Question
+    const examResult = {
       id: q.id,
-      result: {
-        questionPoints: (q.data() as Question).points,
-        penaltyPoints: (q.data() as Question).penaltyPoints,
-      }
-    })
-  )
+      result: {} as AnswerResult
+    }
+    if (question.points) { examResult.result.questionPoints = question.points }
+    if (question.penaltyPoints) { examResult.result.penaltyPoints = question.penaltyPoints }
+    questionsIds.push(examResult)
+  })
 
   shuffle(questionsIds)
 
@@ -249,7 +269,7 @@ export const getExamQuestions = functionInRegion.https.onCall(async (data: { exa
  * regStudentAnswer - Check the student answer to one particular question
  */
 export const regStudentAnswer = functionInRegion.https.onCall(async (data: RegStudentAnswerParams, context: functions.https.CallableContext) => {
-  const userRecord = await getUser(context)
+  const userRecord = await getStudent(context)
   const email = userRecord.email!.toLowerCase()
   const examResultRef = db.collection(EXAMS).doc(data.exam).collection(EXAM_RESULTS).doc(email)
 
@@ -302,7 +322,7 @@ export const regStudentAnswer = functionInRegion.https.onCall(async (data: RegSt
  * testQuestionResult - calculate result points of one particular question
  */
 export const testQuestionResult = functionInRegion.https.onCall(async (data: TestQuestionResultParams, context: functions.https.CallableContext) => {
-  await getUser(context)
+  await getTeacher(context)
 
   const questionRef = db.collection(TESTS).doc(data.test).collection(QUESTIONS).doc(data.question)
   const questionDoc = await questionRef.get();
@@ -324,7 +344,10 @@ export const testQuestionResult = functionInRegion.https.onCall(async (data: Tes
     penaltyPoints: question.penaltyPoints
   }, data.calculations, correct, data.answers)
 
-  return {points}
+  return {
+    points,
+    explanation: answer.explanation || null
+  }
 })
 
 /**
@@ -332,7 +355,7 @@ export const testQuestionResult = functionInRegion.https.onCall(async (data: Tes
  */
 export const examFinish = functionInRegion.https.onCall(async (data: ExamFinishParams, context: functions.https.CallableContext) => {
   const userRecord = await getUser(context)
-  const email = userRecord.email!.toLowerCase()
+  const email = ((data.student && (userRecord.customClaims as UserCustomClaims).teacher === true) ? data.student : userRecord.email!).toLowerCase()
 
   const examResultRef = db.collection(EXAMS).doc(data.exam).collection(EXAM_RESULTS).doc(email)
   const examResultDoc = await examResultRef.get();
@@ -378,6 +401,7 @@ export const examFinish = functionInRegion.https.onCall(async (data: ExamFinishP
     const answer = answersMap[qid.id]
     if (!answer) { return }
     qid.result.correct = answer.answers
+    if (answer.explanation) { qid.result.explanation = answer.explanation }
     qid.result.studentPoints = 0
     if (!qid.result.student || qid.result.student.length === 0) { return }
 

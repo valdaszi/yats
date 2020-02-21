@@ -1,5 +1,9 @@
-$md-xsmall: 'max-width: 480px';
+$md-xsmall: 'max-width: 640px';
 $bg-color: rgb(250, 250, 255);
+
+mat-divider {
+  margin: 16px 0;
+}
 
 .form-container {
   padding: 0 8px;
@@ -44,18 +48,19 @@ $bg-color: rgb(250, 250, 255);
   }
 }
 
-
 .markdown-container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   .markdown-edit {
-    flex-basis: 50%;
-    margin-right: 8px;
+    flex: 1 1 50%;
     display: flex;
     flex-direction: column;
+    margin: 0 8px;
   }
   .markdown-view {
-    flex-basis: 50%;
+    flex: 1 1 50%;
+    margin: 0 8px;
     background-color: $bg-color;
   }
 

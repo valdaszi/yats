@@ -28,8 +28,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/prismjs/themes/prism-tomorrow.css",
-              "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "src/styles.scss",
               "src/app-theme.scss"
             ],

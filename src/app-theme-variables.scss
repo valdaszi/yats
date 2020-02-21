@@ -13,5 +13,9 @@ $primary: mat-color($app-primary);
 $accent: mat-color($app-accent);
 $warn: mat-color($app-warn);
 
+$primary-text: mat-color($app-primary, default-contrast);
+$accent-text: mat-color($app-accent, default-contrast);
+$warn-text: mat-color($app-warn, default-contrast);
+
 $primary-very-light: mat-color($app-primary, 50)
 

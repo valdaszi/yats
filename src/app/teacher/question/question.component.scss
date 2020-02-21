@@ -28,15 +28,15 @@
   margin-left: 8px;
 }
 
-.answer-text {
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  white-space: normal;
-}
-
 .points-container {
+  background-color: $accent;
+  color: $accent-text;
   margin: 8px 0;
   .points {
-    background-color: $accent;
+    padding: 12px;
+  }
+  .explanation {
     padding: 12px;
   }
 }
+

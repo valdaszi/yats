@@ -21,7 +21,7 @@ export class QuestionComponent implements OnInit {
   test: Test
   question: Question
   answers: string | string[]
-  points: { points?: number }
+  points: { points?: number, explanation?: string }
   pointsWorking: boolean
 
   CheckType = QuestionType.Check
@@ -100,6 +100,14 @@ export class QuestionComponent implements OnInit {
     } finally {
       this.pointsWorking = false
     }
+  }
+
+  getNumber(i: number) {
+    if (this.test && this.test.numberingType) {
+      return this.test.numberingType === 'A' ? String.fromCharCode('A'.charCodeAt(0) + i) :
+        this.test.numberingType === 'N' ? i + 1 : ''
+    }
+    return ''
   }
 
 }

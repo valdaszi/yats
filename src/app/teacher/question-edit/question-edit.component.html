@@ -3,6 +3,8 @@
 <div *ngIf="model">
   <form #testQuestionForm="ngForm" class="form-container">
 
+    <h3 translate>Question</h3>
+
     <div class="markdown-container">
       <div class="markdown-edit">
         <mat-form-field>
@@ -22,17 +24,18 @@
         </div>
       </div>
       <mat-card class="markdown-view">
-        <mat-card-subtitle translate>Question preview</mat-card-subtitle>
         <markdown lineNumbers [start]="model.lineNumber" [data]="model.question" *ngIf="model.lineNumber"></markdown>
         <markdown [data]="model.question" *ngIf="!model.lineNumber"></markdown>
       </mat-card>
     </div>
 
+    <mat-divider></mat-divider>
+
     <h3 translate>Answers</h3>
 
     <div class="field">
       <mat-form-field class="type">
-        <mat-label translate>Answer Type</mat-label>
+        <mat-label translate>Answer type</mat-label>
         <mat-select class="type" matInput
                     [(ngModel)]="model.type"
                     name="type"
@@ -48,7 +51,14 @@
       <mat-card *ngFor="let ans of answer.answers; index as i" class="answer">
         <mat-form-field class="answer-answer">
           <mat-label translate>Answer</mat-label>
-          <input type="text" matInput [(ngModel)]="ans.answer" (change)="answerOnChange()" name="answer{{i}}" required>
+          <textarea matInput
+                    class="answer-text"
+                    [(ngModel)]="ans.answer"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="1"
+                    (change)="answerOnChange()"
+                    name="answer{{i}}"
+                    required></textarea>
         </mat-form-field>
 
         <mat-checkbox color="primary" [(ngModel)]="ans.correct" class="answer-correct" (change)="answerOnChange()" name="correct{{i}}">
@@ -76,6 +86,28 @@
           <input type="number" matInput [(ngModel)]="model.points" name="points" required>
         </mat-form-field>
       </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h3 translate>Explanation</h3>
+
+    <div class="markdown-container">
+      <div class="markdown-edit">
+        <mat-form-field>
+          <mat-label translate>Explanation</mat-label>
+          <textarea matInput
+                    class="answer-text"
+                    [(ngModel)]="answer.explanation"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="1"
+                    (change)="answerOnChange()"
+                    name="explanation"></textarea>
+        </mat-form-field>
+      </div>
+      <mat-card class="markdown-view">
+        <markdown [data]="answer.explanation"></markdown>
+      </mat-card>
     </div>
 
     <div class="button-row">

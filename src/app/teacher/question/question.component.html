@@ -4,45 +4,44 @@
 
   <mat-divider></mat-divider>
 
-  <div class="points-container">
-    <div *ngIf="pointsWorking">
-      <mat-spinner diameter="20"></mat-spinner>
-    </div>
-    <div *ngIf="!pointsWorking && points">
-      <div class="points"><span translate>Points</span>: {{ points.points }} / {{ question.points }} </div>
-    </div>
+  <div class="points-container" *ngIf="!pointsWorking && points">
+    <div class="points"><span translate>Points</span>: {{ points.points }} / {{ question.points }} </div>
+    <div class="explanation" *ngIf="points.explanation">{{ points.explanation }}</div>
   </div>
 
-  <div class="answers">
+  <div class="answers" [ngSwitch]="question.type">
 
-    <div *ngIf="question.type === TextType">
+    <div *ngSwitchCase="TextType">
       <mat-form-field>
         <mat-label translate>Answer</mat-label>
         <input class="answer-text" type="text" matInput [(ngModel)]="answers">
       </mat-form-field>
     </div>
 
-    <div *ngIf="question.type === RadioType">
+    <div *ngSwitchCase="RadioType">
       <label class="label" translate>Answer</label>
       <mat-radio-group class="radio-group" [(ngModel)]="answers">
-        <mat-radio-button color="primary" class="radio-button" *ngFor="let answer of question.answers" [value]="answer">
-          <span class="answer-text">{{ answer }}</span>
+        <mat-radio-button color="primary" class="radio-button" *ngFor="let answer of question.answers; let i=index" [value]="answer">
+          <div class="answer-block"><div class="answer-number">{{ getNumber(i) }}</div><pre class="answer-text">{{ answer }}</pre></div>
         </mat-radio-button>
       </mat-radio-group>
     </div>
 
-    <div *ngIf="question.type === CheckType">
+    <div *ngSwitchCase="CheckType">
       <label class="label" translate>Answers</label>
-      <div *ngFor="let answer of question.answers" class="checkbox-group">
+      <div *ngFor="let answer of question.answers; let i=index" class="checkbox-group">
         <mat-checkbox color="primary" class="checkbox-button" [checked]="answers.includes(answer)" (change)="onChange(answer)">
-          <span class="answer-text">{{ answer }}</span>
+          <div class="answer-block"><div class="answer-number">{{ getNumber(i) }}</div><pre class="answer-text">{{ answer }}</pre></div>
         </mat-checkbox>
       </div>
     </div>
 
   </div>
 
-  <div class="buttons">
+  <div *ngIf="pointsWorking">
+    <mat-spinner diameter="20"></mat-spinner>
+  </div>
+  <div *ngIf="!pointsWorking" class="buttons">
     <button mat-raised-button color="primary" (click)="ok()"><span translate>OK</span></button>
   </div>
 

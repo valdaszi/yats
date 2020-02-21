@@ -41,6 +41,7 @@ export class QuestionEditComponent implements OnInit, OnDestroy {
     if (state && state.test && state.question) {
       this.testId = state.test.id
       this.model = Object.assign({}, state.question)
+      this.initModel()
       this.readAnswers(this.testId, this.model.id)
       log.debug('[state]', this.model)
 
@@ -51,6 +52,7 @@ export class QuestionEditComponent implements OnInit, OnDestroy {
         this.readAnswers(params.id, params.qid)
         this.questionSubscription = this.testsService.getQuestion(params.id, params.qid).valueChanges().pipe(take(1)).subscribe(model => {
           this.model = Object.assign({}, model)
+          this.initModel()
           if (params.qid) {
             this.model.id = params.qid
           }
@@ -66,6 +68,10 @@ export class QuestionEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.questionSubscription) { this.questionSubscription.unsubscribe() }
+  }
+
+  initModel() {
+    this.model.points = this.model.points || 1
   }
 
   readAnswers(testId: string, questionId: string) {

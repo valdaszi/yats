@@ -1,5 +1,6 @@
+<div class="exam-status" translate *ngIf="!student.finished">Exam not finished</div>
 <div class="exam-finished">
-  <div class="student-name">{{ student.name }} </div>
+  <div class="student-name">{{ student.name }}</div>
   <div>
     <span class="text" translate>Questions</span>:
     <span class="exam-student-points">{{ student.questions }}</span>
@@ -76,6 +77,8 @@
       </div>
 
     </div>
+
+    <div class="explanation" *ngIf="current.result.explanation">{{ current.result.explanation }}</div>
   </div>
 
 </div>

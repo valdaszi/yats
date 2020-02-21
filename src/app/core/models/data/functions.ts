@@ -10,6 +10,7 @@ export interface RegStudentAnswerParams {
 }
 
 export interface ExamFinishParams {
+  student?: string,
   exam: string,
   test: string,
 }

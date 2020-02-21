@@ -44,17 +44,17 @@
       <div *ngIf="current.question.type === RadioType">
         <label class="label" translate>Answer</label>
         <mat-radio-group class="radio-group" [(ngModel)]="current.answer">
-          <mat-radio-button color="primary" class="radio-button" *ngFor="let answer of current.question.answers" [value]="answer">
-            <code class="answer-text">{{ answer }}</code>
+          <mat-radio-button color="primary" class="radio-button" *ngFor="let answer of current.question.answers; let i=index" [value]="answer">
+            <div class="answer-block"><div class="answer-number">{{ getNumber(i) }}</div><pre class="answer-text">{{ answer }}</pre></div>
           </mat-radio-button>
         </mat-radio-group>
       </div>
 
       <div *ngIf="current.question.type === CheckType">
         <label class="label" translate>Answers</label>
-        <div *ngFor="let answer of current.question.answers" class="checkbox-group">
+        <div *ngFor="let answer of current.question.answers; let i=index" class="checkbox-group">
           <mat-checkbox color="primary" class="checkbox-button" [checked]="current.answer && current.answer.includes(answer)" (change)="onChange(answer)">
-            <code class="answer-text">{{ answer }}</code>
+            <div class="answer-block"><div class="answer-number">{{ getNumber(i) }}</div><pre class="answer-text">{{ answer }}</pre></div>
           </mat-checkbox>
         </div>
       </div>

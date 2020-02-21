@@ -28,6 +28,13 @@
   padding: 4px;
   margin: 0 8px;
 }
+.icon {
+  position: relative;
+  mat-icon {
+    position: relative;
+    top: 8px;
+  }
+}
 // .email {
 // }
 .email-inline {
@@ -41,6 +48,9 @@
 }
 .bar {
   width: 100px;
+}
+.small {
+  width: 1px;
 }
 
 

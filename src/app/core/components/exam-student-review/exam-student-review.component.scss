@@ -62,11 +62,19 @@ mat-divider {
   align-items: center;
 }
 
+.exam-status {
+  font-size: 120%;
+  padding: 12px;
+  background-color: $warn;
+  color: $warn-text;
+}
+
 .exam-finished {
   font-size: 120%;
   padding: 12px;
   margin: 8px 0;
   background-color: $accent;
+  color: $accent-text;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -109,11 +117,6 @@ mat-divider {
   }
 }
 
-.answer-text {
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  white-space: normal;
-}
-
 .primary {
   color: $primary;
 }
@@ -125,4 +128,10 @@ mat-divider {
 }
 .wrong {
   color: $warn;
+}
+
+.explanation {
+  padding: 12px;
+  background-color: $accent;
+  color: $accent-text;
 }

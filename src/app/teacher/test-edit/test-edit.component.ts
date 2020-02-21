@@ -17,6 +17,11 @@ const log = new Logger('TestEditComponent')
 export class TestEditComponent implements OnInit {
 
   model: Test
+  numberingTypes = [
+    { value: undefined, label: 'None' },
+    { value: 'A', label: 'Alphabetic' },
+    { value: 'N', label: 'Numeric' }
+  ]
 
   constructor(
     private route: ActivatedRoute,
@@ -28,14 +33,14 @@ export class TestEditComponent implements OnInit {
     const state = navigation.extras.state as { model: Test }
     if (state && state.model) {
       this.model = Object.assign({}, state.model)
-      this.model.calculations = this.model.calculations || {}
+      this.initModel()
       log.debug('[state]', this.model)
     } else {
       this.route.params.subscribe(params => {
         log.debug(params)
         this.testsService.get(params.id).valueChanges().pipe(take(1)).subscribe(model => {
           this.model = Object.assign({}, model)
-          this.model.calculations = this.model.calculations || {}
+          this.initModel()
           if (params.id) {
             this.model.id = params.id
           }
@@ -49,6 +54,10 @@ export class TestEditComponent implements OnInit {
     this.menuService.menu({})
   }
 
+  initModel() {
+    this.model.calculations = this.model.calculations || {}
+  }
+
   private back() {
     this.router.navigate(['/teacher/test'])
   }
@@ -58,6 +67,7 @@ export class TestEditComponent implements OnInit {
   }
 
   save() {
+    if (!this.model.numberingType) { delete this.model.numberingType }
     this.model.id ? this.update() : this.create()
   }
 

@@ -6,10 +6,10 @@
         <div class="email-inline">{{ result.email }}</div>
       </div>
       <div class="cell email">{{ result.email }}</div>
-      <div class="cell right">{{ result.questions }}</div>
+      <div class="cell right small">{{ result.questions }}</div>
       <div class="cell bar"><mat-progress-bar [value]="result.questions / result.questionsIds.length * 100"></mat-progress-bar></div>
-      <div class="cell right">{{ result.questionsIds.length }}</div>
-      <div class="cell">
+      <div class="cell right small">{{ result.questionsIds.length }}</div>
+      <div class="cell icon">
         <mat-icon *ngIf="!result.finished && !result.startedAt" class="not-started">warning</mat-icon>
         <mat-icon *ngIf="!result.finished && result.startedAt" class="started">edit</mat-icon>
         <mat-icon *ngIf="result.finished" class="finished">done</mat-icon>
@@ -17,8 +17,11 @@
       <div class="cell right">
         <span *ngIf="result.questionPoints">{{ result.points | number }}/{{ result.questionPoints }}</span>
       </div>
-      <div class="cell right percent">
-        {{ percent(result.points || 0, result.questionPoints) }}
+      <div class="cell right percent">{{ percent(result.points || 0, result.questionPoints) }}</div>
+      <div class="cell">
+        <button mat-icon-button aria-label="Finish" color="warn" (click)="finish(result, $event)" *ngIf="!result.finished">
+          <mat-icon>check</mat-icon>
+        </button>
       </div>
     </div>
   </div>

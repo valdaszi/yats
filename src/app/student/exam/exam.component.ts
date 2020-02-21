@@ -23,7 +23,7 @@ export class ExamComponent implements OnInit {
   student: ExamResult
   email: string
 
-  working: boolean
+  working = true
   examFreshStart: boolean
   examContinuation: boolean
   examFinished: boolean
@@ -52,25 +52,22 @@ export class ExamComponent implements OnInit {
 
   private async initExam(m: Exam) {
     this.authService.user.subscribe(async user => {
-      this.email = user.email.toLowerCase()
-      if (!m.emails || m.emails.indexOf(this.email) < 0) {
-        this.exam = {} as Exam
-        return
-      }
-
-      this.exam = Object.assign({}, m)
-
-      // check if exam marked as finished or not valid by date
-      if (this.exam.finished || this.exam.validUntil && this.exam.validUntil < firebase.firestore.Timestamp.now()) {
-        return
-      }
-
-      this.working = true
-
-      this.examFreshStart = false
-      this.examContinuation = false
-
       try {
+        this.email = user.email.toLowerCase()
+        if (!m.emails || m.emails.indexOf(this.email) < 0) {
+          this.exam = {} as Exam
+          return
+        }
+
+        this.exam = Object.assign({}, m)
+
+        // check if exam marked as finished or not valid by date
+        if (this.exam.finished || this.exam.validUntil && this.exam.validUntil < firebase.firestore.Timestamp.now()) {
+          return
+        }
+
+        this.examFreshStart = false
+        this.examContinuation = false
 
         this.student = await this.examsService.prepareExamQuestions(m.id, m.test.id).toPromise()
         if (!this.student) { return }

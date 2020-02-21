@@ -41,7 +41,7 @@ export class QuestionComponent implements OnInit {
   questionNumber = 0
   current: ActiveQuestion
 
-  working: boolean
+  working = true
   examFinished: boolean
   answering: boolean
 
@@ -67,7 +67,6 @@ export class QuestionComponent implements OnInit {
   }
 
   private async getData(id: string) {
-    this.working = true
     const examDoc = await this.examsService.get(id).get().toPromise()
     this.exam = {
       id: examDoc.id,
@@ -88,6 +87,7 @@ export class QuestionComponent implements OnInit {
   }
 
   private async init() {
+    this.working = true
     this.authService.user.subscribe(async user => {
       try {
         this.email = user.email.toLowerCase()
@@ -226,7 +226,7 @@ export class QuestionComponent implements OnInit {
 
   finishTest() {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      data: { question: 'Are you sure you want to finish your exam/test?' }
+      data: { question: 'Are you sure you want to finish exam/test?' }
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -249,6 +249,14 @@ export class QuestionComponent implements OnInit {
     } finally {
       this.working = false
     }
+  }
+
+  getNumber(i: number) {
+    if (this.exam.test && this.exam.test.numberingType) {
+      return this.exam.test.numberingType === 'A' ? String.fromCharCode('A'.charCodeAt(0) + i) :
+        this.exam.test.numberingType === 'N' ? i + 1 : ''
+    }
+    return ''
   }
 
   goExamResult() {

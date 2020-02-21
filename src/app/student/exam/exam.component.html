@@ -16,8 +16,10 @@
 
   <mat-divider></mat-divider>
 
-  <button mat-raised-button color="primary" (click)="start()" *ngIf="examFreshStart"><span translate>Start</span></button>
-  <button mat-raised-button color="primary" (click)="start()" *ngIf="examContinuation"><span translate>Continue</span></button>
+  <button mat-raised-button color="primary" (click)="start()">
+    <span *ngIf="examFreshStart" translate>Start</span>
+    <span *ngIf="examContinuation" translate>Continue</span>
+  </button>
 
   <div *ngIf="examFinished" class="finished-container">
     <div class="finished" translate>Already finished</div>

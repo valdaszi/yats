@@ -1,5 +1,5 @@
 @import './app-theme';
-
+@import './markdown';
 
 // other styles
 * {
@@ -14,11 +14,24 @@ body { margin: 0; }
   bottom: 12px;
 }
 
-markdown {
-  code {
-    display: inline-block
+.answer-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .answer-number {
+    margin-right: 16px;
+    font-size: 80%;
+  }
+
+  .answer-text {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    white-space: pre;
+    margin: 0;
+    font-weight: 900;
   }
 }
+
 
 .fill-remaining-space {
   flex: 1 1 auto;
@@ -29,5 +42,9 @@ markdown {
   width: 100%;
   left: 0;
   top: 0;
+}
+
+markdown {
+
 }
 

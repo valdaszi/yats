@@ -43,6 +43,7 @@ export interface AnswerResult {
   correct?: Choice[]      // correct answer
   student?: Choice[]      // student answer
   studentPoints?: number  // points collected
+  explanation?: string    // correct answer explanations
 }
 
 export const EXAMS = 'exams'

@@ -21,6 +21,7 @@ export class ExamStudentReviewComponent implements OnInit {
   percent: number
   studentPoints: number
   totalPoints: number
+  explanation: string
 
   questionsMap: { [key: string]: ActiveQuestion } = {}
   questionNumber = 0
@@ -42,9 +43,8 @@ export class ExamStudentReviewComponent implements OnInit {
           this.totalPoints += q.result.questionPoints || 0
           this.studentPoints += q.result.studentPoints || 0
         }
-
         const activeQuestion = this.questionsMap[q.id]
-        if (activeQuestion && q.result) {
+        if (activeQuestion && q.result && q.result.correct) {
           activeQuestion.done = true
           activeQuestion.result = q.result
           activeQuestion.answers = []
@@ -77,7 +77,7 @@ export class ExamStudentReviewComponent implements OnInit {
               }
             } else {
               activeQuestion.answers.push({
-                answer: q.result.correct[0].answer,
+                answer: q.result.correct ? q.result.correct[0].answer : '',
                 missed: true,
                 wrong: false,
                 correct: false
@@ -94,7 +94,6 @@ export class ExamStudentReviewComponent implements OnInit {
               })
             })
           }
-
         }
       })
     }

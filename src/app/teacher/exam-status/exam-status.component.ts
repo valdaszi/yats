@@ -3,9 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
+import { MatDialog } from '@angular/material/dialog'
+
 import { MenuService } from '@app/core/services/menu.service'
 import { ExamResult } from '@app/core/models/data'
 import { ExamsService } from '@app/core/models/services/exams.service'
+import { DialogConfirmComponent } from '@app/core/components/dialog-confirm/dialog-confirm.component'
 
 @Component({
   selector: 'app-exam-status',
@@ -20,7 +23,8 @@ export class ExamStatusComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private examsService: ExamsService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private dialog: MatDialog
   ) {
     this.route.params.subscribe(params => {
       this.examResults = this.examsService.listExamResult(params.id)
@@ -53,6 +57,29 @@ export class ExamStatusComponent implements OnInit {
       state: { student },
       relativeTo: this.route
     })
+  }
+
+  finish(student: ExamResult, event: Event) {
+    event.stopPropagation()
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      data: { question: 'Are you sure you want to finish exam/test?' }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.finishing(student)
+      }
+    })
+  }
+
+  private async finishing(student: ExamResult) {
+    try {
+      await this.examsService.examFinish({
+        student: student.email,
+        exam: student.examId,
+        test: student.testId
+      }).toPromise()
+    } finally {
+    }
   }
 
 }

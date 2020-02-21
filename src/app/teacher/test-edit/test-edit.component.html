@@ -16,6 +16,19 @@
 
     <app-labels-edit [model]="model"></app-labels-edit>
 
+    <div class="field">
+      <mat-form-field class="numbering-type">
+        <mat-label translate>Answer numbering type</mat-label>
+        <mat-select class="numbering-type" matInput
+                    [(ngModel)]="model.numberingType"
+                    name="numberingType">
+          <mat-option *ngFor="let type of numberingTypes" [value]="type.value">
+            {{ type.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <mat-checkbox color="primary" [(ngModel)]="model.calculations.penalties" name="penalties">
       <span translate>Penalties</span>
     </mat-checkbox>
