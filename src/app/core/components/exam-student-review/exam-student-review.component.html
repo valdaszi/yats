@@ -75,10 +75,12 @@
 
         </div>
       </div>
-
     </div>
 
-    <div class="explanation" *ngIf="current.result.explanation">{{ current.result.explanation }}</div>
+    <div class="explanation" *ngIf="current.result.explanation">
+      <markdown [data]="current.result.explanation"></markdown>
+    </div>
+
   </div>
 
 </div>

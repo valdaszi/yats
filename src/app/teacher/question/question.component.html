@@ -6,7 +6,9 @@
 
   <div class="points-container" *ngIf="!pointsWorking && points">
     <div class="points"><span translate>Points</span>: {{ points.points }} / {{ question.points }} </div>
-    <div class="explanation" *ngIf="points.explanation">{{ points.explanation }}</div>
+    <div class="explanation" *ngIf="points.explanation">
+      <markdown [data]="points.explanation" ></markdown>
+    </div>
   </div>
 
   <div class="answers" [ngSwitch]="question.type">
