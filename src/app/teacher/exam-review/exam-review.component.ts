@@ -30,6 +30,7 @@ export class ExamReviewComponent implements OnInit {
     private authService: AuthService,
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { student: ExamResult }
     if (state && state.student) {
       this.student = state.student

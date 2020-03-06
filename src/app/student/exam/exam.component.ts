@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog'
 
 import * as firebase from 'firebase/app'
 
-import { DialogConfirmComponent } from '@app/core/components/dialog-confirm/dialog-confirm.component'
+import { DialogConfirmationComponent } from '@app/core/components/dialog-confirmation/dialog-confirmation.component'
 import { MenuService } from '@app/core/services/menu.service'
 import { Exam, ExamResult, GroupExam } from '@app/core/models/data'
 import { ExamsService } from '@app/core/models/services/exams.service'
@@ -94,7 +94,7 @@ export class ExamComponent implements OnInit {
 
   start() {
     if (this.examFreshStart) {
-      const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      const dialogRef = this.dialog.open(DialogConfirmationComponent, {
         data: { question: 'Are you sure you want to start?' }
       })
       dialogRef.afterClosed().subscribe(result => {

@@ -1,28 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { MatTableModule } from '@angular/material/table'
-
 import { CoreModule } from '@app/core/core.module'
 
-import { TestLookupComponent } from './test-lookup.component'
+import { DialogConfirmationComponent } from './dialog-confirmation.component'
 
-describe('TestLookupComponent', () => {
-  let component: TestLookupComponent
-  let fixture: ComponentFixture<TestLookupComponent>
+describe('DialogConfirmationComponent', () => {
+  let component: DialogConfirmationComponent
+  let fixture: ComponentFixture<DialogConfirmationComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TestLookupComponent],
+      declarations: [ DialogConfirmationComponent ],
       imports: [
-        CoreModule,
-        MatTableModule
+        CoreModule
       ]
     })
     .compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestLookupComponent)
+    fixture = TestBed.createComponent(DialogConfirmationComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

@@ -1,7 +1,7 @@
 <mat-form-field class="labels">
   <mat-chip-list #chipList aria-label="Label selection">
     <mat-chip
-      *ngFor="let label of model.labels"
+      *ngFor="let label of model?.labels"
       [removable]="true"
       (removed)="removeLabel(label)">
       {{ label }}

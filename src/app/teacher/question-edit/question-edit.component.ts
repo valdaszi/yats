@@ -37,6 +37,7 @@ export class QuestionEditComponent implements OnInit, OnDestroy {
     private menuService: MenuService
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { test: Test, question: Question }
     if (state && state.test && state.question) {
       this.testId = state.test.id

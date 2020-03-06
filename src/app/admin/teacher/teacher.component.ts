@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MenuService } from '@app/core/services/menu.service'
 import { TeachersService } from '@app/core/models/services/teachers.service'
 import { Teacher } from '@app/core/models/data/teacher'
-import { DialogConfirmComponent } from '@app/core/components/dialog-confirm/dialog-confirm.component'
+import { DialogConfirmationComponent } from '@app/core/components/dialog-confirmation/dialog-confirmation.component'
 
 @Component({
   selector: 'app-teacher',
@@ -60,7 +60,7 @@ export class TeacherComponent implements OnInit {
 
   delete(teacher: Teacher, event: Event) {
     event.stopPropagation()
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: { question: 'Are you sure you want to delete this item?' }
     })
     dialogRef.afterClosed().subscribe(result => {

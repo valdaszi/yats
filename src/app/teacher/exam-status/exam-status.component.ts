@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MenuService } from '@app/core/services/menu.service'
 import { ExamResult } from '@app/core/models/data'
 import { ExamsService } from '@app/core/models/services/exams.service'
-import { DialogConfirmComponent } from '@app/core/components/dialog-confirm/dialog-confirm.component'
+import { DialogConfirmationComponent } from '@app/core/components/dialog-confirmation/dialog-confirmation.component'
 
 @Component({
   selector: 'app-exam-status',
@@ -61,7 +61,7 @@ export class ExamStatusComponent implements OnInit {
 
   finish(student: ExamResult, event: Event) {
     event.stopPropagation()
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: { question: 'Are you sure you want to finish exam/test?' }
     })
     dialogRef.afterClosed().subscribe(result => {

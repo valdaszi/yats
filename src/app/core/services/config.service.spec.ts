@@ -1,12 +1,31 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing'
 
-import { ConfigService } from './config.service';
+import { of } from 'rxjs'
+import { AngularFirestore } from '@angular/fire/firestore'
+
+import { ConfigService } from './config.service'
 
 describe('ConfigService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  const AngularFirestoreStub = {
+    // I just mocked the function you need, if there are more, you can add them here.
+    collection: (path: string) => {
+      // return mocked collection here
+    },
+    doc: (path: string) => {
+      return {
+        valueChanges: () => of()
+      }
+    }
+  }
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      { provide: AngularFirestore, useValue: AngularFirestoreStub }
+    ]
+  }))
 
   it('should be created', () => {
-    const service: ConfigService = TestBed.get(ConfigService);
-    expect(service).toBeTruthy();
-  });
-});
+    const service: ConfigService = TestBed.get(ConfigService)
+    expect(service).toBeTruthy()
+  })
+})

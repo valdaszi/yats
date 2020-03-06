@@ -33,7 +33,6 @@ export class LabelsEditComponent implements OnInit {
 
   ngOnInit() {
     this.labels = this.configService.config.pipe(map(c => c.labels))
-
     this.filteredLabels = this.labelsCtrl.valueChanges.pipe(
       startWith(null),
       switchMap((label: string | null) => {

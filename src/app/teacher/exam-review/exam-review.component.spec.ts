@@ -1,25 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ExamReviewComponent } from './exam-review.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar'
+
+import { ExamReviewComponent } from './exam-review.component'
 
 describe('ExamReviewComponent', () => {
-  let component: ExamReviewComponent;
-  let fixture: ComponentFixture<ExamReviewComponent>;
+  let component: ExamReviewComponent
+  let fixture: ComponentFixture<ExamReviewComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExamReviewComponent ]
+      declarations: [ExamReviewComponent],
+      imports: [MatProgressBarModule]
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExamReviewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ExamReviewComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

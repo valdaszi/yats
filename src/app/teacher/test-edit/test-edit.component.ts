@@ -30,6 +30,7 @@ export class TestEditComponent implements OnInit {
     private menuService: MenuService
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { model: Test }
     if (state && state.model) {
       this.model = Object.assign({}, state.model)

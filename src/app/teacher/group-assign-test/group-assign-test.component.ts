@@ -25,6 +25,7 @@ export class GroupAssignTestComponent implements OnInit {
     private menuService: MenuService
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { group: Group }
     if (state && state.group) {
       this.group = state.group

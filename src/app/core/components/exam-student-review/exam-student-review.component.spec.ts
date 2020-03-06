@@ -1,25 +1,34 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ExamStudentReviewComponent } from './exam-student-review.component';
+import { MatDividerModule } from '@angular/material/divider'
+import { MatIconModule } from '@angular/material/icon'
+import { MarkdownModule } from 'ngx-markdown'
+
+import { ExamStudentReviewComponent } from './exam-student-review.component'
 
 describe('ExamStudentReviewComponent', () => {
-  let component: ExamStudentReviewComponent;
-  let fixture: ComponentFixture<ExamStudentReviewComponent>;
+  let component: ExamStudentReviewComponent
+  let fixture: ComponentFixture<ExamStudentReviewComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExamStudentReviewComponent ]
+      declarations: [ExamStudentReviewComponent],
+      imports: [
+        MatDividerModule,
+        MatIconModule,
+        MarkdownModule
+      ]
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExamStudentReviewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ExamStudentReviewComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
