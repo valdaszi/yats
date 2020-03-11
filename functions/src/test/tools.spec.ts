@@ -1,4 +1,4 @@
-import { subtractPoints, arraysEqual, shuffle, answerPointsCalculator } from './tools'
+import { subtractPoints, arraysEqual, shuffle, answerPointsCalculator } from '../tools'
 
 // Chai is a commonly used library for creating unit test suites. It is easily extended with plugins.
 import chai = require('chai');
