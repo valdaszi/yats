@@ -30,7 +30,7 @@ import { DialogConfirmationComponent } from './components/dialog-confirmation/di
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { LabelsEditComponent } from './components/labels-edit/labels-edit.component';
 import { FirebaseDatePipe } from './pipes/firebase-date.pipe';
-import { TestLookupComponent } from './components/test-lookup/test-lookup.component';
+import { TestSelectComponent } from './components/test-select/test-select.component';
 import { ExamStudentReviewComponent } from './components/exam-student-review/exam-student-review.component'
 
 
@@ -71,7 +71,7 @@ import { ExamStudentReviewComponent } from './components/exam-student-review/exa
     BreadcrumbComponent,
     LabelsEditComponent,
     FirebaseDatePipe,
-    TestLookupComponent,
+    TestSelectComponent,
     ExamStudentReviewComponent
   ],
   entryComponents: [
@@ -87,7 +87,7 @@ import { ExamStudentReviewComponent } from './components/exam-student-review/exa
     BreadcrumbComponent,
     LabelsEditComponent,
     FirebaseDatePipe,
-    TestLookupComponent,
+    TestSelectComponent,
     ExamStudentReviewComponent
   ],
   providers: []

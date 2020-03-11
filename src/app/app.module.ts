@@ -20,7 +20,7 @@ import { MatListModule } from '@angular/material/list'
 import { MatNativeDateModule } from '@angular/material'
 
 import { AppComponent } from './app.component'
-import { CoreModule } from './core/core.module'
+import { CoreModule } from '@app/core/core.module'
 import { LoginModule } from './login/login.module'
 import { AdminModule } from './admin/admin.module'
 import { TeacherModule } from './teacher/teacher.module'

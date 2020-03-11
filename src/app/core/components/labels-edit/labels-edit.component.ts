@@ -33,11 +33,11 @@ export class LabelsEditComponent implements OnInit {
 
   ngOnInit() {
     this.labels = this.configService.config.pipe(map(c => c.labels))
-    this.filteredLabels = this.labelsCtrl.valueChanges.pipe(
-      startWith(null),
-      switchMap((label: string | null) => {
-        return label ? this._filter(label) : this.labels
-      }))
+    this.filteredLabels = this.labelsCtrl.valueChanges
+      .pipe(
+        startWith(null),
+        switchMap(label => label ? this.filter(label) : this.labels)
+      )
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -87,7 +87,7 @@ export class LabelsEditComponent implements OnInit {
     }
   }
 
-  private _filter(value: string): Observable<string[]> {
+  private filter(value: string): Observable<string[]> {
     const filterValue = value.toLowerCase()
     return this.labels
       .pipe(

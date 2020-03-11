@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { EventEmitter } from '@angular/core'
 
 import { of } from 'rxjs'
 
@@ -32,17 +34,21 @@ describe('LabelsEditComponent', () => {
   }
 
   const ConfigServiceStub = {
-    config: of()
+    config: of({})
   }
   const TranslateServiceStub = {
-    get: (key: any) => of(key)
+    get: (key: any) => of(key),
+    onLangChange: new EventEmitter(),
+    onTranslationChange: new EventEmitter(),
+    onDefaultLangChange: new EventEmitter(),
   }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LabelsEditComponent],
+      declarations: [ LabelsEditComponent ],
       imports: [
         ReactiveFormsModule,
+        NoopAnimationsModule,
         FormsModule,
         MatChipsModule,
         MatIconModule,
