@@ -29,7 +29,7 @@ describe('ConfigsService', () => {
   }))
 
   it('should be created', () => {
-    const service: ConfigsService = TestBed.get(ConfigsService)
+    const service: ConfigsService = TestBed.inject(ConfigsService)
     expect(service).toBeTruthy()
   });
 });
