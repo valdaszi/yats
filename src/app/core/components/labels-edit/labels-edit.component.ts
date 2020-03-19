@@ -20,8 +20,8 @@ export class LabelsEditComponent implements OnInit {
 
   labels: Observable<string[]>
 
-  @ViewChild('labelsInput', {static: false}) labelsInput: ElementRef<HTMLInputElement>
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete
+  @ViewChild('labelsInput') labelsInput: ElementRef<HTMLInputElement>
+  @ViewChild('auto') matAutocomplete: MatAutocomplete
 
   separatorKeysCodes: number[] = [ENTER, COMMA]
   labelsCtrl = new FormControl()
