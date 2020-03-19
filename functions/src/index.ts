@@ -1,11 +1,14 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+
 import {
   Group, GROUPS, Exam, EXAMS, EXAM_RESULTS, TESTS, QUESTIONS, TEACHERS,
   ExamResultQuestionsInfo, ExamResult, Choice,
-  RegStudentAnswerParams, ExamFinishParams, TestQuestionResultParams, TestCalculations,
+  RegStudentAnswerParams, ExamFinishParams, TestQuestionResultParams,
   Question, Answer, ANSWERS, AnswerResult
 } from '../../src/app/core/models/data'
+
+import { subtractPoints, arraysEqual, shuffle, answerPointsCalculator } from './tools'
 
 const functionInRegion = functions.region('europe-west1') //, 'europe-west2')
 
@@ -112,55 +115,6 @@ async function getTeacher(context: functions.https.CallableContext): Promise<adm
     throw new functions.https.HttpsError("unauthenticated", "Not a Teacher")
   }
   return userRecord
-}
-
-
-function subtractPoints(n1: any, n2: any) {
-  return (!n1 || !n1.points ? 0 : n1.points) - (!n2 || !n2.points ? 0 : n2.points)
-}
-
-function arraysEqual(arr1: any[] | undefined, arr2: any[] | undefined) {
-  if ((arr1 ? arr1.length : 0) === 0 && (arr2 ? arr2.length : 0) === 0) { return true }
-  if ((arr1 ? arr1.length : 0) !== (arr2 ? arr2.length : 0)) { return false }
-  for (let i = arr1!.length; i--;) {
-    if (arr1![i] !== arr2![i]) { return false }
-  }
-  return true
-}
-
-function shuffle(array: any[]) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]
-  }
-}
-
-function answerPointsCalculator(question: { questionPoints: number, penaltyPoints?: number }, calculations: TestCalculations, correct: string[], check: string[] | string): number {
-  const answer: string[] = Array.isArray(check) ? check.filter(e => e > '') : [check]
-  const hits = answer.filter(a => correct.includes(a)).length
-
-  let points = 0
-  if (hits === correct.length) {
-    points = question.questionPoints
-  } else {
-    if (calculations && calculations.proportional) {
-      const answerValue = question.questionPoints / correct.length
-      if (calculations && calculations.penalties) {
-        points = Math.round(
-          (hits
-            - (answer.length - hits)  // wrong answers
-            // - (correctAnswers.length - hits)   // missed answers
-          ) * answerValue * 10
-        ) / 10
-      } else {
-        points = Math.round( hits * answerValue * 10) / 10
-      }
-    } else {
-      points = calculations && calculations.penalties ? -Math.abs(question.penaltyPoints || 0) : 0
-    }
-  }
-
-  return points;
 }
 
 // Exports:

@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { MenuService } from '@app/core/services/menu.service'
 import { TestsService } from '@app/core/models/services/tests.service'
 import { Test, Question } from '@app/core/models/data'
-import { DialogConfirmComponent } from '@app/core/components/dialog-confirm/dialog-confirm.component'
+import { DialogConfirmationComponent } from '@app/core/components/dialog-confirmation/dialog-confirmation.component'
 
 @Component({
   selector: 'app-questions-list',
@@ -28,6 +28,7 @@ export class QuestionsListComponent implements OnInit {
     private menuService: MenuService
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { model: Test }
     if (state && state.model) {
       this.test = Object.assign({}, state.model)
@@ -93,7 +94,7 @@ export class QuestionsListComponent implements OnInit {
 
   delete(question: Question, event: Event) {
     event.stopPropagation()
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: { question: 'Are you sure you want to delete this item?' }
     })
     dialogRef.afterClosed().subscribe(result => {

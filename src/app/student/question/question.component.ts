@@ -10,7 +10,7 @@ import { MenuService } from '@app/core/services/menu.service'
 import { ExamsService } from '@app/core/models/services/exams.service'
 import { AuthService } from '@app/core/services/auth.service'
 import { Exam, ExamResult, Question, QuestionType } from '@app/core/models/data'
-import { DialogConfirmComponent } from '@app/core/components/dialog-confirm/dialog-confirm.component'
+import { DialogConfirmationComponent } from '@app/core/components/dialog-confirmation/dialog-confirmation.component'
 
 interface ActiveQuestion {
   question: Question,
@@ -54,6 +54,7 @@ export class QuestionComponent implements OnInit {
     private dialog: MatDialog
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { exam: Exam, student: ExamResult }
     if (state && state.exam && state.student) {
       this.exam = state.exam
@@ -225,7 +226,7 @@ export class QuestionComponent implements OnInit {
   }
 
   finishTest() {
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: { question: 'Are you sure you want to finish exam/test?' }
     })
     dialogRef.afterClosed().subscribe(result => {

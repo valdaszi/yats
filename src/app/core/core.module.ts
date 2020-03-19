@@ -26,11 +26,11 @@ import { MessagesComponent } from './components/messages/messages.component'
 import { LabelComponent } from './components/label/label.component'
 import { TruncatePipe } from './pipes/truncate.pipe'
 import { TestLabelComponent } from './components/test-label/test-label.component'
-import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component'
+import { DialogConfirmationComponent } from './components/dialog-confirmation/dialog-confirmation.component'
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { LabelsEditComponent } from './components/labels-edit/labels-edit.component';
 import { FirebaseDatePipe } from './pipes/firebase-date.pipe';
-import { TestLookupComponent } from './components/test-lookup/test-lookup.component';
+import { TestSelectComponent } from './components/test-select/test-select.component';
 import { ExamStudentReviewComponent } from './components/exam-student-review/exam-student-review.component'
 
 
@@ -67,15 +67,15 @@ import { ExamStudentReviewComponent } from './components/exam-student-review/exa
     LabelComponent,
     TruncatePipe,
     TestLabelComponent,
-    DialogConfirmComponent,
+    DialogConfirmationComponent,
     BreadcrumbComponent,
     LabelsEditComponent,
     FirebaseDatePipe,
-    TestLookupComponent,
+    TestSelectComponent,
     ExamStudentReviewComponent
   ],
   entryComponents: [
-    DialogConfirmComponent
+    DialogConfirmationComponent
   ],
   exports: [
     NavComponent,
@@ -83,11 +83,11 @@ import { ExamStudentReviewComponent } from './components/exam-student-review/exa
     LabelComponent,
     TruncatePipe,
     TestLabelComponent,
-    DialogConfirmComponent,
+    DialogConfirmationComponent,
     BreadcrumbComponent,
     LabelsEditComponent,
     FirebaseDatePipe,
-    TestLookupComponent,
+    TestSelectComponent,
     ExamStudentReviewComponent
   ],
   providers: []

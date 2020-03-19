@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { take } from 'rxjs/operators'
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatDialog } from '@angular/material/dialog'
 
 import { MenuService } from '@app/core/services/menu.service'
 import { Test } from '@app/core/models/data'
@@ -25,6 +25,7 @@ export class TestAssignComponent implements OnInit {
     private menuService: MenuService
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { model: Test }
     if (state && state.model) {
       this.test = Object.assign({}, state.model)

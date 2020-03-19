@@ -37,7 +37,7 @@ export class ExamStudentReviewComponent implements OnInit {
     // prepare existed answers
     this.totalPoints = 0
     this.studentPoints = 0
-    if (this.student.questionsIds) {
+    if (this.student && this.student.questionsIds) {
       this.student.questionsIds.forEach(q => {
         if (q.result) {
           this.totalPoints += q.result.questionPoints || 0

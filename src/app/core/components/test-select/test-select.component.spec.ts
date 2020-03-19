@@ -1,14 +1,11 @@
-import { LayoutModule } from '@angular/cdk/layout'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterTestingModule } from '@angular/router/testing'
+import { EventEmitter } from '@angular/core'
 
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule } from '@angular/material/icon'
-import { MatListModule } from '@angular/material/list'
-import { MatSidenavModule } from '@angular/material/sidenav'
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatMenuModule } from '@angular/material/menu'
+import { MatTableModule } from '@angular/material/table'
+import { MatPaginatorModule } from '@angular/material/paginator'
+
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 import { of } from 'rxjs'
 import { AngularFirestore } from '@angular/fire/firestore'
@@ -17,21 +14,19 @@ import { AngularFireAuth } from '@angular/fire/auth'
 
 import { AuthService } from '@app/core/services/auth.service'
 
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { TestSelectComponent } from './test-select.component'
 
-import { NavComponent } from './nav.component'
-
-describe('NavComponent', () => {
-  let component: NavComponent
-  let fixture: ComponentFixture<NavComponent>
+describe('TestSelectComponent', () => {
+  let component: TestSelectComponent
+  let fixture: ComponentFixture<TestSelectComponent>
 
   const AngularFirestoreStub = {
-    collection: (path: string) => {
+    collection: () => {
       return {
         snapshotChanges: () => of()
       }
     },
-    doc: (path: string) => {
+    doc: () => {
       return {
         valueChanges: () => of(),
         collection: () => {
@@ -44,44 +39,43 @@ describe('NavComponent', () => {
   }
   const AngularFireFunctionsStub = {}
   const AngularFireAuthStub = {}
-
   const AuthServiceStub = {
     user: of()
+  }
+  const TranslateServiceStub = {
+    get: (key: any) => of(key),
+    onLangChange: new EventEmitter(),
+    onTranslationChange: new EventEmitter(),
+    onDefaultLangChange: new EventEmitter(),
   }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        BreadcrumbComponent,
-        NavComponent
-      ],
+      declarations: [ TestSelectComponent ],
       imports: [
         NoopAnimationsModule,
-        LayoutModule,
-        MatButtonModule,
-        MatIconModule,
-        MatListModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatMenuModule,
-        RouterTestingModule
+        MatTableModule,
+        MatPaginatorModule,
+        TranslateModule
       ],
       providers: [
         { provide: AngularFirestore, useValue: AngularFirestoreStub },
         { provide: AngularFireFunctions, useValue: AngularFireFunctionsStub },
         { provide: AngularFireAuth, useValue: AngularFireAuthStub },
         { provide: AuthService, useValue: AuthServiceStub },
+        { provide: TranslateService, useValue: TranslateServiceStub },
       ]
-    }).compileComponents()
+    })
+    .compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavComponent)
+    fixture = TestBed.createComponent(TestSelectComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
 
-  it('should compile', () => {
+  it('should create', () => {
     expect(component).toBeTruthy()
   })
 })

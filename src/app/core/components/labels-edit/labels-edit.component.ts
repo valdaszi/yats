@@ -20,8 +20,8 @@ export class LabelsEditComponent implements OnInit {
 
   labels: Observable<string[]>
 
-  @ViewChild('labelsInput', {static: false}) labelsInput: ElementRef<HTMLInputElement>
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete
+  @ViewChild('labelsInput') labelsInput: ElementRef<HTMLInputElement>
+  @ViewChild('auto') matAutocomplete: MatAutocomplete
 
   separatorKeysCodes: number[] = [ENTER, COMMA]
   labelsCtrl = new FormControl()
@@ -33,12 +33,11 @@ export class LabelsEditComponent implements OnInit {
 
   ngOnInit() {
     this.labels = this.configService.config.pipe(map(c => c.labels))
-
-    this.filteredLabels = this.labelsCtrl.valueChanges.pipe(
-      startWith(null),
-      switchMap((label: string | null) => {
-        return label ? this._filter(label) : this.labels
-      }))
+    this.filteredLabels = this.labelsCtrl.valueChanges
+      .pipe(
+        startWith(null),
+        switchMap(label => label ? this.filter(label) : this.labels)
+      )
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -88,7 +87,7 @@ export class LabelsEditComponent implements OnInit {
     }
   }
 
-  private _filter(value: string): Observable<string[]> {
+  private filter(value: string): Observable<string[]> {
     const filterValue = value.toLowerCase()
     return this.labels
       .pipe(

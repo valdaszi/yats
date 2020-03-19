@@ -4,15 +4,15 @@ import { Subscription } from 'rxjs'
 import { MatPaginator } from '@angular/material/paginator'
 import { MatTableDataSource } from '@angular/material/table'
 
-import { TestsLookupService } from './test-lookup.service'
+import { TestSelectService } from './test-select.service'
 import { Test } from '@app/core/models/data'
 
 @Component({
-  selector: 'app-test-lookup',
-  templateUrl: './test-lookup.component.html',
-  styleUrls: ['./test-lookup.component.scss']
+  selector: 'app-test-select',
+  templateUrl: './test-select.component.html',
+  styleUrls: ['./test-select.component.scss']
 })
-export class TestLookupComponent implements OnInit, OnDestroy {
+export class TestSelectComponent implements OnInit, OnDestroy {
 
   @Output() selected = new EventEmitter<Test>()
 
@@ -23,10 +23,10 @@ export class TestLookupComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Test>
   displayedColumns: string[] = ['position', 'name', 'description', 'questions', 'duration']
 
-  constructor(private testsLookupService: TestsLookupService) { }
+  constructor(private testsSelectService: TestSelectService) { }
 
   ngOnInit() {
-    this.testSubscription = this.testsLookupService.tests.subscribe(data => {
+    this.testSubscription = this.testsSelectService.getTests().subscribe(data => {
       this.tests = data
       this.dataSource = new MatTableDataSource<Test>(this.tests)
       this.dataSource.paginator = this.paginator

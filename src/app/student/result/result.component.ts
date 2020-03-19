@@ -30,6 +30,7 @@ export class ResultComponent implements OnInit {
     private authService: AuthService,
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { exam: Exam, student: ExamResult }
     if (state && state.exam && state.student) {
       this.exam = state.exam

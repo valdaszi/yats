@@ -26,6 +26,7 @@ export class GroupEditComponent implements OnInit, OnDestroy {
     private menuService: MenuService
   ) {
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { model: Group }
     if (state && state.model) {
       this.model = this.initModel(state.model)

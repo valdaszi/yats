@@ -11,7 +11,7 @@ import { MenuService } from '@app/core/services/menu.service'
 import { GroupsService } from '@app/core/models/services/groups.service'
 import { ExamsService } from '@app/core/models/services/exams.service'
 import { Group, GroupExam } from '@app/core/models/data/group'
-import { DialogConfirmComponent } from '@app/core/components/dialog-confirm/dialog-confirm.component'
+import { DialogConfirmationComponent } from '@app/core/components/dialog-confirmation/dialog-confirmation.component'
 
 
 @Component({
@@ -161,7 +161,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
 
   deleteExam(group: Group, index: number, event: Event) {
     event.stopPropagation()
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: { question: 'Are you sure you want to delete this item?' }
     })
     dialogRef.afterClosed().subscribe(result => {

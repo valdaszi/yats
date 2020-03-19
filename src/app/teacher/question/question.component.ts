@@ -36,6 +36,7 @@ export class QuestionComponent implements OnInit {
   ) {
     this.working = true
     const navigation = this.router.getCurrentNavigation()
+    if (!navigation || !navigation.extras) { return }
     const state = navigation.extras.state as { test: Test, question: Question }
     if (state && state.test && state.question) {
       this.test = Object.assign({}, state.test)

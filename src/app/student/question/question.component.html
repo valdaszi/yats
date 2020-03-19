@@ -9,11 +9,11 @@
 <div *ngIf="current && !working">
 
   <div class="numbers-container">
-    <button mat-raised-button color="primary" (click)="prevQuestion()" [disabled]="answering"><span translate>Previous</span></button>
+    <button mat-raised-button color="primary" (click)="prevQuestion()" [disabled]="answering || hasNewAnswers()"><span translate>Previous</span></button>
     <div class="answered-questions"><span translate>Question points</span>: <span class="answered-number">{{ current.question.points }}</span></div>
     <div> <span class="current-question">{{ questionNumber+1 }}</span> / <span class="total-question">{{ (studentRef | async)?.questionsIds.length }}</span></div>
     <div class="answered-questions"><span translate>Answered</span>: <span class="answered-number">{{ (studentRef | async)?.questions }}</span></div>
-    <button mat-raised-button color="primary" (click)="nextQuestion()" [disabled]="answering"><span translate>Next</span></button>
+    <button mat-raised-button color="primary" (click)="nextQuestion()" [disabled]="answering || hasNewAnswers()"><span translate>Next</span></button>
   </div>
 
   <mat-divider></mat-divider>
