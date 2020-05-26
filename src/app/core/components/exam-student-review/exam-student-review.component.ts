@@ -103,6 +103,14 @@ export class ExamStudentReviewComponent implements OnInit {
     this.startQuestions()
   }
 
+  getNumber(i: number) {
+    if (this.exam.test && this.exam.test.numberingType) {
+      return this.exam.test.numberingType === 'A' ? String.fromCharCode('A'.charCodeAt(0) + i) :
+        this.exam.test.numberingType === 'N' ? i + 1 : ''
+    }
+    return ''
+  }
+
   private startQuestions() {
     if (!this.student || !this.questions || this.questions.length === 0) { return }
 

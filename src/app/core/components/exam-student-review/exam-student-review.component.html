@@ -41,7 +41,9 @@
         <div class="answer-label" translate>Answer</div>
 
         <div class="answers-container">
-          <div *ngFor="let ans of current.answers" class="answer-line" [ngClass]="{'correct': ans.correct, 'missed': ans.missed, 'wrong': ans.wrong}">
+          <div *ngFor="let ans of current.answers; let i=index" class="answer-line" [ngClass]="{'correct': ans.correct, 'missed': ans.missed, 'wrong': ans.wrong}">
+
+            <div class="question-number">{{ getNumber(i) }}</div>
 
             <div class="question-type" *ngIf="current.question.type === CheckType">
               <mat-icon *ngIf="ans.correct || ans.missed">check_box</mat-icon>
@@ -72,7 +74,7 @@
               <mat-icon *ngIf="!(ans.correct || ans.missed)" class="wrong">close</mat-icon>
             </div>
 
-            <div class="answer-text" [ngClass]="{'primary': current.question.type === TextType && ans.missed}">{{ ans.answer }}</div>
+            <pre class="answer-text" [ngClass]="{'primary': current.question.type === TextType && ans.missed}">{{ ans.answer }}</pre>
 
           </div>
         </div>

@@ -108,12 +108,16 @@ mat-divider {
   flex-direction: row;
   align-items: center;
 
+  .question-number {
+    margin-right: 8px;
+    font-size: 80%;
+  }
   .question-type {
-    padding: 8px;
+    margin-right: 8px;
     color: $primary;
   }
   .answer-result {
-    padding: 8px;
+    margin-right: 8px;
   }
 }
 

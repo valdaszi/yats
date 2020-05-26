@@ -9,6 +9,11 @@
 html, body { height: 100%; }
 body { margin: 0; }
 
+pre {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  white-space: pre;
+}
+
 .global-add-button {
   position: fixed;
   bottom: 12px;
@@ -25,13 +30,10 @@ body { margin: 0; }
   }
 
   .answer-text {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    white-space: pre;
     margin: 0;
     font-weight: 900;
   }
 }
-
 
 .fill-remaining-space {
   flex: 1 1 auto;
@@ -43,8 +45,3 @@ body { margin: 0; }
   left: 0;
   top: 0;
 }
-
-markdown {
-
-}
-
