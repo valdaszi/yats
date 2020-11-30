@@ -47,6 +47,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   authGoogle() {
     this.authService.authGoogle()
   }
+
+  authMicrosoft() {
+    this.authService.authMicrosoft()
+  }
 }
 
 // export class LoginComponent implements OnInit, OnDestroy {

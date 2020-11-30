@@ -8,7 +8,7 @@
 /bazel-out
 
 # dependencies
-node_modules
+/node_modules
 
 # profiling files
 chrome-profiler-events*.json
@@ -40,11 +40,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-/src/translations/template.*
-/src/environments/.env.*
 
 # System Files
 .DS_Store
 Thumbs.db
-firebase-debug.log
-.firebase/*

@@ -5,7 +5,8 @@ import { DomSanitizer } from '@angular/platform-browser'
 export enum Icons {
   Google = 'google',
   GitHub = 'github',
-  Facebook = 'facebook'
+  Facebook = 'facebook',
+  Microsoft = 'microsoft'
 }
 
 @Injectable({

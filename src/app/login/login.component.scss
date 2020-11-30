@@ -19,6 +19,7 @@ mat-form-field {
 
 button {
   margin: 10px;
+  min-width: 250px;
 
   &.github {
     background-color: #24292e;
@@ -26,6 +27,11 @@ button {
   }
 
   &.google {
+    background-color: white;
+    color: black;
+  }
+
+  &.microsoft {
     background-color: white;
     color: black;
   }

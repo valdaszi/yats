@@ -82,8 +82,8 @@ export class AuthService {
     return this.currentUser && this.currentUser.roles && this.currentUser.roles.student === true
   }
 
-  refreshToken() {
-    const user = this.afAuth.auth.currentUser
+  async refreshToken() {
+    const user = await this.afAuth.currentUser
     if (user) {
       this.getUserIdTokenResult(user, true)
     }
@@ -106,7 +106,7 @@ export class AuthService {
   async logout() {
     this.currentUser = null
     localStorage.removeItem('currentUser')
-    await this.afAuth.auth.signOut()
+    await this.afAuth.signOut()
     this.router.navigate(['/login'])
   }
 
@@ -126,10 +126,16 @@ export class AuthService {
     return this.authLogin(new auth.GoogleAuthProvider())
   }
 
+  authMicrosoft() {
+    const provider = new auth.OAuthProvider('microsoft.com')
+    provider.addScope('mail.read')
+    return this.authLogin(provider)
+  }
+
   // Auth logic to run auth providers
   async authLogin(provider: firebase.auth.AuthProvider) {
     try {
-      const userCredential = await this.afAuth.auth.signInWithPopup(provider)
+      const userCredential = await this.afAuth.signInWithPopup(provider)
       await this.go(userCredential, userCredential.additionalUserInfo.isNewUser ? 3 : 1)
       log.info(userCredential.user)
     } catch (e) {

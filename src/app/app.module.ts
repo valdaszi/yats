@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { AngularFireModule } from '@angular/fire'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
-import { AngularFireFunctionsModule, FUNCTIONS_REGION } from '@angular/fire/functions'
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions'
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LayoutModule } from '@angular/cdk/layout'
@@ -71,7 +71,7 @@ import { DashboardComponent } from './dashboard/dashboard.component'
   ],
   declarations: [AppComponent, DashboardComponent],
   providers: [
-    { provide: FUNCTIONS_REGION, useValue: 'europe-west1' }
+    { provide: REGION, useValue: 'europe-west1' }
   ],
   bootstrap: [AppComponent]
 })
